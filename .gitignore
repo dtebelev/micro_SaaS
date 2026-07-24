@@ -1,0 +1,62 @@
+# ==== Секреты и переменные окружения — НИКОГДА не коммитить ====
+.env
+.env.*
+*.env
+!.env.example
+.env.local
+.env.*.local
+
+# Ключи, сертификаты, токены
+*.key
+*.pem
+*.pfx
+*.p12
+*.cer
+*.crt
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+*.keystore
+*.jks
+secrets.*
+*secret*
+*credentials*
+*.token
+serviceAccount*.json
+gcloud-*.json
+
+# ==== Зависимости ====
+node_modules/
+vendor/
+.pnp/
+.pnp.js
+
+# ==== Сборка / вывод ====
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+*.tsbuildinfo
+
+# ==== Логи ====
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ==== ОС и редакторы ====
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*~
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# ==== Локальные настройки Claude Code ====
+.claude/settings.local.json

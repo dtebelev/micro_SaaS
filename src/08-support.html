@@ -1,0 +1,336 @@
+<!DOCTYPE html><html class="light" lang="ru" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Поддержка — Naturonata</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Playfair+Display:wght@700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Playfair+Display:wght@100..900&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#fafcd5",
+                        "on-background": "#1a1d06",
+                        "secondary-fixed": "#d9ed5d",
+                        "primary": "#0e401c",
+                        "on-secondary-container": "#5c6900",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#285831",
+                        "on-primary-fixed-variant": "#20502a",
+                        "secondary": "#586400",
+                        "on-primary-container": "#98cd9b",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#d6ea5a",
+                        "surface-container": "#eef1ca",
+                        "outline": "#717970",
+                        "background": "#fafcd5",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f4f7d0",
+                        "on-tertiary-fixed-variant": "#444935",
+                        "on-surface-variant": "#414940",
+                        "surface-container-highest": "#e3e5bf",
+                        "surface-container-high": "#e9ebc5",
+                        "inverse-primary": "#9ed3a1",
+                        "on-tertiary-container": "#bec2a8",
+                        "primary-fixed": "#baf0bc",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2f3218",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c1c9be",
+                        "tertiary-fixed": "#e1e5ca",
+                        "on-tertiary-fixed": "#191d0d",
+                        "on-primary-fixed": "#002109",
+                        "on-surface": "#1a1d06",
+                        "secondary-fixed-dim": "#bdd143",
+                        "tertiary-fixed-dim": "#c5c9af",
+                        "surface-tint": "#386940",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#4c503c",
+                        "surface-bright": "#fafcd5",
+                        "tertiary": "#353926",
+                        "primary-fixed-dim": "#9ed3a1",
+                        "on-secondary-fixed-variant": "#424b00",
+                        "surface-dim": "#daddb7",
+                        "inverse-on-surface": "#f1f4cd",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#191e00",
+                        "surface-variant": "#e3e5bf"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-v-tablet": "5rem",
+                        "section-v-desktop": "6rem",
+                        "gap-3-col": "1.5rem",
+                        "component-gap": "0.5rem",
+                        "card-padding": "1.5rem",
+                        "section-v-mobile": "4rem",
+                        "container-max": "1120px",
+                        "gap-2-col": "2.5rem"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Playfair Display"],
+                        "label-badge": ["Inter"],
+                        "headline-lg-mobile": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["0.75rem", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "headline-sm": ["1.25rem", {"lineHeight": "1.25", "fontWeight": "700"}],
+                        "headline-md": ["2.25rem", {"lineHeight": "1.15", "fontWeight": "700"}],
+                        "body-lg": ["1rem", {"lineHeight": "1.7", "fontWeight": "400"}],
+                        "headline-lg": ["3.4rem", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-badge": ["0.75rem", {"lineHeight": "1.0", "letterSpacing": "0.08em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["2.25rem", {"lineHeight": "1.1", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        .custom-glass {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-background font-body-lg antialiased">
+<!-- Side Navigation Shell -->
+<aside class="bg-surface-container-low dark:bg-surface-container-lowest h-screen w-64 fixed left-0 top-0 shadow-sm flex flex-col h-full py-8 px-4 z-40 hidden md:flex">
+<div class="mb-12 px-4 flex items-center gap-3">
+
+<div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed">NaturoPin 1.0</h1>
+<p class="font-label-badge text-label-badge opacity-70">Автоматизация контента</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">source</span>
+<span class="font-body-lg">Источник</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-body-lg">Галерея</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">fact_check</span>
+<span class="font-body-lg">Проверка</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined">ios_share</span>
+<span class="font-body-lg">Экспорт</span>
+</a>
+</nav>
+<div class="mt-auto px-4">
+<div class="p-4 bg-primary-container/10 rounded-lg flex flex-col gap-2">
+<span class="material-symbols-outlined text-primary">support_agent</span>
+<p class="font-body-sm text-primary font-bold">Нужна помощь?</p>
+<p class="font-body-sm text-on-surface-variant">Мы всегда рядом, чтобы поддержать вас.</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 min-h-screen relative">
+<!-- Atmospheric Background Element -->
+<div class="absolute top-0 right-0 w-1/2 h-1/2 opacity-20 pointer-events-none">
+
+</div>
+<!-- Header -->
+<header class="sticky top-0 z-30 bg-surface/80 backdrop-blur-md px-6 py-6 max-w-container-max mx-auto flex justify-between items-center">
+<div class="md:hidden flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">menu</span>
+<span class="font-headline-sm text-primary">Naturonata</span>
+</div>
+<div class="hidden md:block">
+<nav class="flex gap-8 items-center">
+<span class="font-label-badge text-label-badge tracking-widest text-primary uppercase">Центр поддержки</span>
+</nav>
+</div>
+
+</header>
+<div class="max-w-container-max mx-auto px-6 py-12 md:py-20">
+<!-- Hero Section -->
+<section class="mb-16">
+<div class="max-w-2xl">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-6">Как мы можем вам помочь сегодня?</h2>
+<p class="font-body-lg text-on-surface-variant opacity-80 mb-8">Забота о питании вашего ребенка — это путь, который мы пройдем вместе. Найдите ответы на частые вопросы или свяжитесь с нашей командой экспертов.</p>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+<!-- FAQ Section -->
+<div class="md:col-span-7 space-y-6">
+<h3 class="font-headline-md text-headline-sm text-primary flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined">quiz</span> Частые вопросы
+                    </h3>
+<div class="space-y-4">
+<!-- FAQ Item 1 -->
+<div class="faq-item bg-surface-container-low rounded-[24px] p-6 cursor-pointer hover:shadow-md transition-all border border-transparent hover:border-primary/10" onclick="this.classList.toggle('active')">
+<div class="flex justify-between items-center">
+<h4 class="font-body-lg font-bold text-primary">Как подобрать рацион при аллергии?</h4>
+<span class="material-symbols-outlined faq-icon transition-transform text-primary">expand_more</span>
+</div>
+<div class="faq-answer mt-4">
+<p class="font-body-lg text-on-surface-variant">Наши специалисты помогут составить индивидуальный план питания, исключая аллергены и обеспечивая всеми необходимыми нутриентами. Вы можете загрузить результаты анализов в разделе «Источник» для более точного подбора.</p>
+</div>
+</div>
+<!-- FAQ Item 2 -->
+<div class="faq-item bg-surface-container-low rounded-[24px] p-6 cursor-pointer hover:shadow-md transition-all border border-transparent hover:border-primary/10" onclick="this.classList.toggle('active')">
+<div class="flex justify-between items-center">
+<h4 class="font-body-lg font-bold text-primary">Безопасны ли ваши рекомендации?</h4>
+<span class="material-symbols-outlined faq-icon transition-transform text-primary">expand_more</span>
+</div>
+<div class="faq-answer mt-4">
+<p class="font-body-lg text-on-surface-variant">Все рекомендации базируются на актуальных клинических протоколах и принципах доказательной нутрициологии. Мы стремимся создать безопасную и поддерживающую среду для здоровья вашего малыша.</p>
+</div>
+</div>
+<!-- FAQ Item 3 -->
+<div class="faq-item bg-surface-container-low rounded-[24px] p-6 cursor-pointer hover:shadow-md transition-all border border-transparent hover:border-primary/10" onclick="this.classList.toggle('active')">
+<div class="flex justify-between items-center">
+<h4 class="font-body-lg font-bold text-primary">Как связаться с нутрициологом?</h4>
+<span class="material-symbols-outlined faq-icon transition-transform text-primary">expand_more</span>
+</div>
+<div class="faq-answer mt-4">
+<p class="font-body-lg text-on-surface-variant">Вы можете задать вопрос через форму обратной связи на этой странице или написать нам в мессенджеры. Время ответа обычно составляет не более 2 часов в рабочее время.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Contact & Support Form -->
+<div class="md:col-span-5 space-y-8">
+<!-- Contact Cards -->
+<div class="bg-primary text-on-primary p-8 rounded-[24px] shadow-lg relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="font-headline-sm text-headline-sm mb-4">Прямая связь</h3>
+<div class="space-y-4">
+<a class="flex items-center gap-4 group" href="mailto:care@naturonata.com">
+<div class="w-10 h-10 rounded-full bg-on-primary/10 flex items-center justify-center group-hover:bg-on-primary/20 transition-colors">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<span class="font-body-lg">care@naturopin.com</span>
+</a>
+<div class="flex gap-4 pt-4">
+<button class="flex-1 bg-on-primary text-primary font-bold py-3 px-4 rounded-full flex items-center justify-center gap-2 hover:translate-y-[-1px] transition-transform shadow-md">
+<span class="material-symbols-outlined">chat</span> Telegram
+                                    </button>
+<button class="flex-1 bg-secondary-fixed text-on-secondary-container font-bold py-3 px-4 rounded-full flex items-center justify-center gap-2 hover:translate-y-[-1px] transition-transform shadow-md">
+<span class="material-symbols-outlined">forum</span> WhatsApp
+                                    </button>
+</div>
+</div>
+</div>
+<div class="absolute -bottom-10 -right-10 opacity-10">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: &quot;FILL&quot; 1;">favorite</span>
+</div>
+</div>
+<!-- Feedback Form -->
+<div class="bg-surface-container-high rounded-[24px] p-8">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-6">Напишите нам</h3>
+<form class="space-y-4">
+<div>
+<label class="font-label-badge text-label-badge text-primary block mb-2 px-4">Имя</label>
+<input class="w-full bg-surface-container-lowest border-outline-variant rounded-full px-6 py-3 focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none" placeholder="Александра" type="text">
+</div>
+<div>
+<label class="font-label-badge text-label-badge text-primary block mb-2 px-4">Email</label>
+<input class="w-full bg-surface-container-lowest border-outline-variant rounded-full px-6 py-3 focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none" placeholder="example@mail.com" type="email">
+</div>
+<div>
+<label class="font-label-badge text-label-badge text-primary block mb-2 px-4">Ваше сообщение</label>
+<textarea class="w-full bg-surface-container-lowest border-outline-variant rounded-[24px] px-6 py-4 focus:ring-2 focus:ring-primary focus:border-primary transition-all outline-none resize-none" placeholder="Расскажите, чем мы можем помочь..." rows="4"></textarea>
+</div>
+<button class="w-full bg-secondary-container text-on-secondary-container font-bold py-4 rounded-full hover:translate-y-[-2px] hover:shadow-lg transition-all flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined">send</span> Отправить сообщение
+                            </button>
+</form>
+</div>
+</div>
+</div>
+<!-- Emotional Accent Section -->
+<section class="mt-20 text-center max-w-3xl mx-auto">
+<div class="w-24 h-24 mx-auto mb-8 relative">
+<div class="absolute inset-0 bg-secondary-container/40 rounded-full animate-ping"></div>
+<div class="relative w-full h-full bg-secondary-container rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container text-4xl" style="font-variation-settings: &quot;FILL&quot; 1;">spa</span>
+</div>
+</div>
+<h4 class="font-headline-md text-primary mb-4">Спокойствие в каждом решении</h4>
+<p class="font-body-lg text-on-surface-variant">Мы понимаем, как важно чувствовать уверенность, когда речь идет о здоровье ребенка. Наша миссия — дать вам инструменты и знания, которые принесут мир и гармонию в ваш дом.</p>
+</section>
+</div>
+<!-- Footer -->
+<footer class="bg-surface-container dark:bg-surface-container-high w-full py-12">
+<div class="max-w-container-max mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="text-center md:text-left">
+<h5 class="font-headline-sm text-primary mb-2">NaturoPin</h5>
+<p class="font-body-sm text-on-surface-variant opacity-70 max-w-xs">© 2026 NaturoPin. Все права защищены.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="font-label-badge text-label-badge text-on-surface-variant hover:text-primary transition-colors" href="#">Политика конфиденциальности</a>
+<a class="font-label-badge text-label-badge text-on-surface-variant hover:text-primary transition-colors" href="#">Условия использования</a>
+<a class="font-label-badge text-label-badge text-on-surface-variant hover:text-primary transition-colors" href="#">Поддержка</a>
+<a class="font-label-badge text-label-badge text-on-surface-variant hover:text-primary transition-colors" href="#">Контакты</a>
+</div>
+</div>
+</footer>
+</main>
+<script>
+        // Simple logic for micro-interactions
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button[type="submit"]');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Отправка...';
+                btn.disabled = true;
+                
+                setTimeout(() => {
+                    btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Отправлено!';
+                    btn.classList.replace('bg-secondary-container', 'bg-primary');
+                    btn.classList.add('text-on-primary');
+                }, 1500);
+            });
+        });
+
+        // Hover effects for nav items
+        const navItems = document.querySelectorAll('nav a');
+        navItems.forEach(item => {
+            item.addEventListener('mousedown', () => {
+                item.style.transform = 'scale(0.98)';
+            });
+            item.addEventListener('mouseup', () => {
+                item.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+
+
+</body></html>

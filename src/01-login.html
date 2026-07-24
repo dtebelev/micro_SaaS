@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="ru" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Naturonata - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-container": "#d6ea5a",
+                        "outline-variant": "#c1c9be",
+                        "on-secondary-fixed": "#191e00",
+                        "on-primary-fixed-variant": "#20502a",
+                        "tertiary-fixed-dim": "#c5c9af",
+                        "surface-bright": "#fafcd5",
+                        "on-secondary-container": "#5c6900",
+                        "inverse-surface": "#2f3218",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#191d0d",
+                        "background": "#fafcd5",
+                        "outline": "#717970",
+                        "surface-container": "#eef1ca",
+                        "inverse-primary": "#9ed3a1",
+                        "secondary-fixed": "#d9ed5d",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#daddb7",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#e9ebc5",
+                        "on-primary-fixed": "#002109",
+                        "on-tertiary-fixed-variant": "#444935",
+                        "on-error-container": "#93000a",
+                        "surface": "#fafcd5",
+                        "primary-container": "#285831",
+                        "on-secondary-fixed-variant": "#424b00",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#e1e5ca",
+                        "on-surface": "#1a1d06",
+                        "surface-container-low": "#f4f7d0",
+                        "error-container": "#ffdad6",
+                        "on-background": "#1a1d06",
+                        "on-tertiary-container": "#bec2a8",
+                        "on-surface-variant": "#414940",
+                        "surface-tint": "#386940",
+                        "surface-variant": "#e3e5bf",
+                        "tertiary": "#353926",
+                        "secondary": "#586400",
+                        "secondary-fixed-dim": "#bdd143",
+                        "on-primary-container": "#98cd9b",
+                        "surface-container-highest": "#e3e5bf",
+                        "primary-fixed-dim": "#9ed3a1",
+                        "primary-fixed": "#baf0bc",
+                        "tertiary-container": "#4c503c",
+                        "primary": "#0e401c",
+                        "on-tertiary": "#ffffff",
+                        "inverse-on-surface": "#f1f4cd",
+                        "on-secondary": "#ffffff"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Playfair Display", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #FDFDFD;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 40px -10px rgba(40, 88, 49, 0.1);
+        }
+        .input-soft {
+            border: 1px solid #c1c9be;
+            transition: all 0.3s ease;
+        }
+        .input-soft:focus {
+            border-color: #285831;
+            box-shadow: 0 0 0 4px rgba(40, 88, 49, 0.05);
+            outline: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6 overflow-x-hidden">
+<!-- Ambient Background Decorations -->
+<div class="fixed inset-0 pointer-events-none -z-10">
+<div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-surface-container opacity-40 blur-[100px]"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[35%] h-[35%] rounded-full bg-primary-fixed opacity-20 blur-[100px]"></div>
+</div>
+<!-- Login Container -->
+<main class="w-full max-w-[480px] animate-in fade-in slide-in-from-bottom-8 duration-700">
+<!-- Logo Section -->
+<div class="flex justify-center mb-10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: &quot;FILL&quot; 1;">eco</span>
+<span class="text-primary font-headline text-2xl font-bold tracking-tight">NaturoPin</span>
+</div>
+</div>
+<!-- Auth Card -->
+<div class="glass-card rounded-xl p-10 md:p-12 border border-white/50">
+<header class="text-center mb-10">
+<h1 class="font-headline text-3xl md:text-4xl text-on-surface mb-3 leading-tight">Добро пожаловать</h1>
+<p class="text-on-surface-variant font-body text-body-lg leading-relaxed px-4">Войдите в свою учетную запись для управления контентом.</p>
+</header>
+<form action="#" class="space-y-6" method="POST">
+<!-- Username/Email -->
+<div class="space-y-2">
+<label class="block text-sm font-bold text-on-surface ml-4" for="identifier">Имя пользователя или Email</label>
+<div class="relative">
+<input class="w-full h-14 px-6 rounded-lg input-soft bg-surface-container-lowest text-on-surface placeholder:text-outline/60" id="identifier" name="identifier" placeholder="username@email.com" required="" type="text">
+<div class="absolute right-4 top-1/2 -translate-y-1/2 text-outline-variant">
+<span class="material-symbols-outlined">person</span>
+</div>
+</div>
+</div>
+<!-- Password -->
+<div class="space-y-2">
+<div class="flex justify-between items-center px-4">
+<label class="block text-sm font-bold text-on-surface" for="password">Пароль</label>
+<a class="text-sm font-bold text-primary hover:text-secondary transition-colors duration-200" href="#">Забыли пароль?</a>
+</div>
+<div class="relative">
+<input class="w-full h-14 px-6 rounded-lg input-soft bg-surface-container-lowest text-on-surface placeholder:text-outline/60" id="password" name="password" placeholder="••••••••" required="" type="password">
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline-variant hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined" id="togglePassword">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember Me Toggle -->
+<div class="flex items-center gap-3 px-4 py-2">
+<input class="w-5 h-5 rounded-md border-outline-variant text-primary focus:ring-primary/20" id="remember" type="checkbox">
+<label class="text-sm text-on-surface-variant cursor-pointer select-none" for="remember">Запомнить меня на этом устройстве</label>
+</div>
+<!-- Login Action -->
+<div class="pt-4">
+<button class="w-full h-14 bg-secondary-fixed text-on-secondary-fixed font-bold text-lg rounded-full shadow-lg shadow-secondary-fixed/30 hover:shadow-xl hover:-translate-y-0.5 active:scale-95 transition-all duration-200 flex items-center justify-center gap-2 group" type="submit">
+                        Войти
+                        <span class="material-symbols-outlined text-xl group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</form>
+<!-- Social/Alternative Auth -->
+<div class="mt-8 flex items-center gap-4">
+<div class="h-px bg-outline-variant flex-1"></div>
+<span class="text-xs font-bold text-outline uppercase tracking-widest">Или войти через</span>
+<div class="h-px bg-outline-variant flex-1"></div>
+</div>
+<div class="mt-6 flex justify-center gap-4">
+<button class="w-full h-14 rounded-full border border-outline-variant hover:bg-surface-container transition-colors flex items-center justify-center gap-2 font-bold text-on-surface">
+<img alt="Google" class="w-5 h-5 grayscale opacity-70 group-hover:grayscale-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDC1r13IWQUvgP87ApUpbf6XfXLk3j6Cb_alLJrmodHCuu0QzqlKL_lfweYyQERKHGq2uwtFYOXAttpHartIrzBWvGQ4_CKSaab_dAYKrh1a6ezWQM0H_Gl0DfGKB4VCI-q5JboxKdw7Ys4YWS9SYsFJ1_0dgNr2QZmFLGH-46Vrzb0xZvunv9P4pNXTkqAjHG3-IkLKbazBENhKANNYdFgE78CRizkakh07t2bSnm7Hs-KuKF6c34UXpit8g0OXCS6OERa52WqVfQ">
+                    Google
+                </button>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="mt-8 text-center space-y-4">
+<p class="text-on-surface-variant">
+                У вас нет аккаунта? 
+                <a class="text-primary font-bold hover:underline ml-1" href="#">Зарегистрироваться</a>
+</p>
+<div class="flex justify-center gap-6 pt-4">
+<a class="text-xs text-outline hover:text-primary transition-colors" href="#">Политика конфиденциальности</a>
+<a class="text-xs text-outline hover:text-primary transition-colors" href="#">Условия использования</a>
+</div>
+</div>
+</main>
+<!-- Interactive Layer for Input Effects -->
+<script>
+        // Password visibility toggle
+        const toggleBtn = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        toggleBtn.addEventListener('click', () => {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            toggleBtn.textContent = isPassword ? 'visibility_off' : 'visibility';
+        });
+
+        // Simple animation on focus
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.previousElementSibling?.querySelector('label')?.classList.add('text-primary');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.previousElementSibling?.querySelector('label')?.classList.remove('text-primary');
+            });
+        });
+    </script>
+
+
+</body></html>

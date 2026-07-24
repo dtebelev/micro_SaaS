@@ -1,0 +1,288 @@
+<!DOCTYPE html><html class="light" lang="ru" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Workshop - Успешный экспорт</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Playfair+Display:wght@700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Playfair+Display:wght@100..900&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "lime-accent": "#C4D84A",
+                    "secondary": "#586400",
+                    "surface-bright": "#fafcd5",
+                    "primary-fixed-dim": "#9ed3a1",
+                    "primary": "#0e401c",
+                    "on-tertiary-container": "#bec2a8",
+                    "tertiary-fixed": "#e1e5ca",
+                    "error-red": "#DC2626",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-on-surface": "#f1f4cd",
+                    "on-tertiary-fixed-variant": "#444935",
+                    "tertiary-fixed-dim": "#c5c9af",
+                    "surface-tint": "#386940",
+                    "light-sage": "#E0E4C9",
+                    "error-container": "#ffdad6",
+                    "background": "#fafcd5",
+                    "error": "#ba1a1a",
+                    "secondary-sage": "#A9B9AB",
+                    "muted-border": "#D3D8B5",
+                    "deep-forest": "#285831",
+                    "surface": "#fafcd5",
+                    "on-secondary": "#ffffff",
+                    "primary-container": "#285831",
+                    "surface-container-high": "#e9ebc5",
+                    "on-secondary-container": "#5c6900",
+                    "surface-variant": "#e3e5bf",
+                    "surface-container": "#eef1ca",
+                    "primary-fixed": "#baf0bc",
+                    "on-primary-container": "#98cd9b",
+                    "on-surface-variant": "#414940",
+                    "on-background": "#1a1d06",
+                    "outline": "#717970",
+                    "surface-container-highest": "#e3e5bf",
+                    "surface-dim": "#daddb7",
+                    "secondary-fixed": "#d9ed5d",
+                    "secondary-container": "#d6ea5a",
+                    "on-secondary-fixed": "#191e00",
+                    "secondary-fixed-dim": "#bdd143",
+                    "on-primary-fixed-variant": "#20502a",
+                    "off-white": "#FDFDFD",
+                    "on-primary-fixed": "#002109",
+                    "on-primary": "#ffffff",
+                    "surface-container-low": "#f4f7d0",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "inverse-primary": "#9ed3a1",
+                    "inverse-surface": "#2f3218",
+                    "on-surface": "#1a1d06",
+                    "outline-variant": "#c1c9be",
+                    "tertiary": "#353926",
+                    "tertiary-container": "#4c503c",
+                    "on-secondary-fixed-variant": "#424b00",
+                    "on-error": "#ffffff",
+                    "hover-lime": "#B6CB38",
+                    "on-tertiary-fixed": "#191d0d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "component-gap": "0.5rem",
+                    "gap-3-col": "1.5rem",
+                    "section-v-mobile": "4rem",
+                    "section-v-tablet": "5rem",
+                    "container-max": "1120px",
+                    "section-v-desktop": "6rem",
+                    "card-padding": "1.5rem",
+                    "gap-2-col": "2.5rem"
+            },
+            "fontFamily": {
+                    "headline-md": ["Playfair Display"],
+                    "body-sm": ["Inter"],
+                    "headline-sm": ["Playfair Display"],
+                    "headline-lg": ["Playfair Display"],
+                    "label-badge": ["Inter"],
+                    "headline-lg-mobile": ["Playfair Display"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["2.25rem", {"lineHeight": "1.15", "fontWeight": "700"}],
+                    "body-sm": ["0.75rem", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "headline-sm": ["1.25rem", {"lineHeight": "1.25", "fontWeight": "700"}],
+                    "headline-lg": ["3.4rem", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-badge": ["0.75rem", {"lineHeight": "1.0", "letterSpacing": "0.08em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["2.25rem", {"lineHeight": "1.1", "fontWeight": "700"}],
+                    "body-lg": ["1rem", {"lineHeight": "1.7", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .custom-glass {
+            background: rgba(250, 252, 213, 0.86);
+            backdrop-filter: blur(16px);
+        }
+        .shadow-soft {
+            box-shadow: 0 12px 30px rgba(37, 40, 15, 0.08);
+        }
+        .shadow-cta {
+            box-shadow: 0 12px 26px rgba(196, 216, 74, 0.28);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen selection:bg-lime-accent selection:text-deep-forest overflow-x-hidden">
+<!-- SideNavBar (Shared Component) -->
+<aside class="bg-primary-container dark:bg-primary-container h-screen w-64 fixed left-0 top-0 flex flex-col py-8 z-50 shadow-md">
+<div class="px-6 mb-10">
+<h1 class="font-headline-sm text-headline-sm text-on-primary-container flex items-center gap-2">
+<span class="material-symbols-outlined text-lime-accent" style="font-variation-settings: &quot;FILL&quot; 1;">auto_awesome</span>NaturoPin 1.0</h1>
+<p class="font-body-sm text-body-sm text-on-primary-container/60 mt-1 uppercase tracking-widest">Автоматизация контента</p>
+</div>
+<nav class="flex-grow space-y-2">
+<a class="flex items-center gap-3 text-on-primary-container/70 pl-5 py-3 hover:text-lime-accent hover:bg-white/10 transition-all scale-95 active:scale-90 font-body-lg text-body-lg" href="#">
+<span class="material-symbols-outlined">source</span>
+            Источник
+        </a>
+<a class="flex items-center gap-3 text-on-primary-container/70 pl-5 py-3 hover:text-lime-accent hover:bg-white/10 transition-all scale-95 active:scale-90 font-body-lg text-body-lg" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+            Галерея
+        </a>
+<a class="flex items-center gap-3 text-on-primary-container/70 pl-5 py-3 hover:text-lime-accent hover:bg-white/10 transition-all scale-95 active:scale-90 font-body-lg text-body-lg" href="#">
+<span class="material-symbols-outlined">rate_review</span>
+            Проверка
+        </a>
+<!-- Active State: Export -->
+<a class="flex items-center gap-3 text-lime-accent font-bold border-l-4 border-lime-accent pl-4 py-3 bg-white/5 transition-all scale-95 active:scale-90 font-body-lg text-body-lg" href="#">
+<span class="material-symbols-outlined">ios_share</span>
+            Экспорт
+        </a>
+</nav>
+<div class="px-6 mt-auto space-y-4">
+<button class="w-full bg-lime-accent text-deep-forest py-3 rounded-full font-bold shadow-cta hover:translate-y-[-1px] hover:bg-hover-lime transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">add</span>
+            Новый проект
+        </button>
+<div class="pt-6 border-t border-white/10">
+<a class="flex items-center gap-3 text-on-primary-container/70 pl-5 py-2 hover:text-lime-accent transition-all font-body-lg text-body-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Настройки
+            </a>
+</div>
+
+</div>
+</aside>
+<!-- TopAppBar (Shared Component) -->
+<header class="bg-surface/86 backdrop-blur-md dark:bg-inverse-surface/86 sticky top-0 z-40 flex justify-between items-center w-full px-8 h-16 ml-64 max-w-[calc(100%-16rem)]">
+<div class="flex items-center">
+<h2 class="font-headline-sm text-headline-sm font-bold text-deep-forest">Центр экспорта</h2>
+</div>
+
+</header>
+<!-- Main Canvas -->
+<main class="ml-64 p-12 min-h-[calc(100vh-128px)] flex flex-col items-center justify-center relative"><div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden z-0 opacity-[0.06]"><div class="w-[600px] h-[600px] grayscale">https://lh3.googleusercontent.com/aida-public/AB6AXuBhXOlhsvxRaqLeuxcQk5fH8C4BCJuPtcjlNBbmSqGTkTn_c4c6Sg9FMNFyblumhduX1Ut1MUm6O0HZneZ_vbyKuyWCs6GpMMFeU_wcSyMKVPAuArhxQV6IS34qzWeibsAk_CKmOwFK-Fm06aVSb1cZIfoNtrANTi0w1R6UJYx_1sZZ0UI9I9nv42RHKE_83eT4YILo9axTLo7N07TZOAMvv7LB9B_o5zNEOi1cpJ-Bv9y8z48yue_WNmBSUWNzbzD2rA</div></div>
+<!-- Success State Hero -->
+<div class="max-w-container-max w-full text-center mb-16 animate-in fade-in duration-700 slide-in-from-bottom-4">
+<div class="inline-flex items-center justify-center w-20 h-20 bg-lime-accent rounded-full mb-8 shadow-cta">
+<span class="material-symbols-outlined text-4xl text-deep-forest" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-deep-forest mb-4">Ваши пины готовы!</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-10">
+            Цикл автоматизации контента завершен. Мы создали набор из 12 высококонверсионных пинов, оптимизированных для вашей целевой аудитории.
+        </p>
+<div class="flex items-center justify-center gap-4">
+<button class="bg-lime-accent text-deep-forest px-10 py-4 rounded-full font-bold shadow-cta hover:translate-y-[-1px] hover:bg-hover-lime transition-all flex items-center gap-3">
+<span class="material-symbols-outlined">download</span>
+                Скачать ZIP
+            </button>
+<button class="border-2 border-deep-forest text-deep-forest px-10 py-4 rounded-full font-bold hover:bg-deep-forest hover:text-white transition-all flex items-center gap-3">
+<span class="material-symbols-outlined">image</span>
+                Скачать PNG
+            </button>
+</div>
+</div>
+<!-- Preview Grid -->
+<section class="max-w-container-max w-full">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-headline-sm text-headline-sm text-deep-forest">Предпросмотр пака (12 активов)</h3>
+<span class="font-label-badge text-label-badge bg-light-sage px-3 py-1 rounded-full text-secondary">ID ПРОЕКТА: #2024-X16</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<!-- Main Preview Card -->
+<div class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-lg shadow-soft" style="transform: translateY(0px); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Main Pinterest pin design" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAz3wZrluAb0ErErmxrnjjuv1P3jSpT2f99WqAkMErO489DVI6_9KFXfdGuVg80w3_nPQ0JhxZzZ4-YQ1CBGGFEsMcF5EXR4lzCEw9IrgOkqIYrmG_oPRgPVlUhZEUa91hCa4WmjMTWcwOFQUSCC0HBhMcLY3mxRX595o0-QcdkdqjeqcEUFRx-b-NSmuCikFknIqKd1jUfBhvGK7Ousn_1Zqth-H62Xs-2Me5tZq4HgHFcNCfrx_MZ">
+<div class="absolute inset-0 bg-gradient-to-t from-deep-forest/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+<span class="text-white font-bold">Основной вариант</span>
+</div>
+</div>
+<!-- Secondary Preview Cards -->
+<div class="relative group overflow-hidden rounded-lg shadow-soft aspect-[3/4]">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Alternative pin design 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIew9rPnIH9NNSa0ctibv1_rmM3NSu6zx2eB0V8D8yBX5y8fWSASIxPTb3gWNR5Q_Lzj8HeTR4KrBaLhlTrjnGWqVSVaBv33bhC4GBdTut8U4MTfAwVQJr4I4nExTnrK4ieOdoyc99YvxXraD2IldkqR6Sj8JfJe9KEtbzCtPw8eZI37KKF3iP9_hoaGAcT_5nKv6tjMqRsdKsv6Ux-eC1zgOaa6HkTzFUrtWaBW8H-fbpBPfKDH7Q">
+<div class="absolute top-3 right-3">
+<span class="bg-white/90 backdrop-blur text-deep-forest px-2 py-1 rounded-md text-[10px] font-bold">ALT 1</span>
+</div>
+</div>
+<div class="relative group overflow-hidden rounded-lg shadow-soft aspect-[3/4]">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Alternative pin design 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnSMOu6LD75WHMXkFd1keUMeOIV31Dj9MC3CaDtyNn5bM4lfa-zAY8fhanSHfouoaDSEZd3TUmBWz1_kLfN8RkVC0jwc6X6EqQGmWoxYTqCHkvgmWkwdUmspGZSIeUGYn4corjq7N7CeBcXJ-H10zqZPghY9tOBRlBUg295q1sTy6b_j3a2S7UjCHZInrhhxEKmAIvGEs2hqRy4c64kWr-WnapSNTnB4qBtv2ORAeR2MPYrQR0RcOv">
+<div class="absolute top-3 right-3">
+<span class="bg-white/90 backdrop-blur text-deep-forest px-2 py-1 rounded-md text-[10px] font-bold">ALT 2</span>
+</div>
+</div>
+<div class="relative group overflow-hidden rounded-lg shadow-soft aspect-[3/4]">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Alternative pin design 3" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9ReK31yGuU6G7289OSb_DkXxHMaGSMhea61CzxRalbSXFG-vnx9ojokpW4jPe5rKkdNkCSb_D6SmxAszHiXLXTI9xNuPMzjUDZkdXsnAJQin1Mi9eA-aMKGAcYjfMnmzAQRHct77bjeEQ_uwu9aj9QAEgdZw59aVZe-xQX5XBwKLyfEY6H7cpUF-HYfK-4OaLZHSOGHfHIlEr2AHrcNpghAx4urxmlxxE2TAu2DiPiDhg4HtJxz0u">
+<div class="absolute top-3 right-3">
+<span class="bg-white/90 backdrop-blur text-deep-forest px-2 py-1 rounded-md text-[10px] font-bold">ALT 3</span>
+</div>
+</div>
+<div class="relative group overflow-hidden rounded-lg shadow-soft aspect-[3/4]">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Alternative pin design 4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDInIQXnpJ26HMvFAbQkycBkG8dlLirQKvLURYqPv6y_zdP2Q4uSD765EV2uvPyFoDhSQnqsJAvv__qVfwLiGeS-S6VOPADwo9oWcRY5TZgV07LOpgfuzIziK1mBH54dfWiLTmrS8HRHQjX61gFeQ2iOskEPTLH-sHdcVIi8_MbhPiBGWY-UxlfGf4aP9e0K9TSiLB-epWvmM2Z9W9S2lj-8vNy30G1G-x4mXpkL1NqokNfNr6uJgXK">
+<div class="absolute top-3 right-3">
+<span class="bg-white/90 backdrop-blur text-deep-forest px-2 py-1 rounded-md text-[10px] font-bold">ALT 4</span>
+</div>
+</div>
+</div>
+<!-- View More Placeholder -->
+<div class="mt-10 flex justify-center">
+<button class="text-secondary font-bold flex items-center gap-2 hover:underline transition-all">
+                Показать все 12 активов <span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="bg-surface-container-low dark:bg-surface-dim w-full ml-64 max-w-[calc(100%-16rem)] flex justify-between items-center px-8 py-6">
+<div class="flex items-center gap-4">
+<span class="font-label-badge text-label-badge text-secondary uppercase">© 2026 naturopin Content Automation. Создано для экспертов.</span>
+</div>
+<div class="flex gap-8">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary underline transition-opacity duration-200" href="#">Политика конфиденциальности</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary underline transition-opacity duration-200" href="#">Условия использования</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary underline transition-opacity duration-200" href="#">Поддержка</a>
+</div>
+</footer>
+<!-- Atmosphere/Micro-interactions Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Subtle hover lift for cards
+        const cards = document.querySelectorAll('.rounded-lg');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+                card.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Button active states
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.96)';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+</body></html>

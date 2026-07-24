@@ -1,0 +1,287 @@
+<!DOCTYPE html><html class="light" lang="ru" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Мастерская | Источник</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#20502a",
+                        "off-white": "#FDFDFD",
+                        "on-primary-fixed": "#002109",
+                        "on-primary-container": "#98cd9b",
+                        "on-surface-variant": "#414940",
+                        "on-background": "#1a1d06",
+                        "outline": "#717970",
+                        "surface-container-highest": "#e3e5bf",
+                        "secondary-container": "#d6ea5a",
+                        "on-secondary-fixed": "#191e00",
+                        "surface-dim": "#daddb7",
+                        "secondary-fixed": "#d9ed5d",
+                        "secondary-fixed-dim": "#bdd143",
+                        "on-secondary-fixed-variant": "#424b00",
+                        "on-error": "#ffffff",
+                        "hover-lime": "#B6CB38",
+                        "on-tertiary-fixed": "#191d0d",
+                        "surface-container-low": "#f4f7d0",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2f3218",
+                        "inverse-primary": "#9ed3a1",
+                        "outline-variant": "#c1c9be",
+                        "on-surface": "#1a1d06",
+                        "tertiary": "#353926",
+                        "tertiary-container": "#4c503c",
+                        "on-tertiary-container": "#bec2a8",
+                        "tertiary-fixed": "#e1e5ca",
+                        "error-red": "#DC2626",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-on-surface": "#f1f4cd",
+                        "tertiary-fixed-dim": "#c5c9af",
+                        "surface-tint": "#386940",
+                        "on-tertiary-fixed-variant": "#444935",
+                        "light-sage": "#E0E4C9",
+                        "lime-accent": "#C4D84A",
+                        "secondary": "#586400",
+                        "surface-bright": "#fafcd5",
+                        "primary-fixed-dim": "#9ed3a1",
+                        "primary": "#0e401c",
+                        "primary-container": "#285831",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#e9ebc5",
+                        "surface-variant": "#e3e5bf",
+                        "on-secondary-container": "#5c6900",
+                        "surface-container": "#eef1ca",
+                        "primary-fixed": "#baf0bc",
+                        "error-container": "#ffdad6",
+                        "background": "#fafcd5",
+                        "error": "#ba1a1a",
+                        "secondary-sage": "#A9B9AB",
+                        "muted-border": "#D3D8B5",
+                        "surface": "#fafcd5",
+                        "deep-forest": "#285831"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gap-2-col": "2.5rem",
+                        "section-v-desktop": "6rem",
+                        "card-padding": "1.5rem",
+                        "section-v-mobile": "4rem",
+                        "section-v-tablet": "5rem",
+                        "container-max": "1120px",
+                        "component-gap": "0.5rem",
+                        "gap-3-col": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Playfair Display"],
+                        "body-lg": ["Inter"],
+                        "label-badge": ["Inter"],
+                        "headline-lg": ["Playfair Display"],
+                        "headline-sm": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["2.25rem", {"lineHeight": "1.1", "fontWeight": "700"}],
+                        "body-lg": ["1rem", {"lineHeight": "1.7", "fontWeight": "400"}],
+                        "label-badge": ["0.75rem", {"lineHeight": "1.0", "letterSpacing": "0.08em", "fontWeight": "700"}],
+                        "headline-lg": ["3.4rem", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["1.25rem", {"lineHeight": "1.25", "fontWeight": "700"}],
+                        "headline-md": ["2.25rem", {"lineHeight": "1.15", "fontWeight": "700"}],
+                        "body-sm": ["0.75rem", {"lineHeight": "1.4", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        .shadow-card {
+            box-shadow: 0 12px 30px rgba(37, 40, 15, 0.08);
+        }
+
+        .shadow-cta {
+            box-shadow: 0 12px 26px rgba(196, 216, 74, 0.28);
+        }
+
+        body {
+            background-color: #FDFDFD;
+            color: #1a1d06;
+        }
+
+        /* Hide scrollbar but keep functionality */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+<!-- SideNavBar (Predicted Component) -->
+<nav class="h-screen w-64 fixed left-0 top-0 bg-primary-container flex flex-col py-8 shadow-md z-50">
+<div class="px-8 mb-12">
+<h1 class="font-headline-sm text-headline-sm font-bold text-on-primary-container">NaturoPin 1.0</h1>
+<p class="font-label-badge text-label-badge text-on-primary-container/60 mt-1 uppercase tracking-widest">Автоматизация контента</p>
+</div>
+<div class="flex-grow space-y-2">
+<!-- Nav Item: Source (Active) -->
+<a class="flex items-center gap-3 py-3 text-lime-accent font-bold border-l-4 border-lime-accent pl-4 bg-white/5 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="source">source</span>
+<span class="font-body-lg text-body-lg">Источник</span>
+</a>
+<!-- Nav Item: Gallery -->
+<a class="flex items-center gap-3 py-3 text-on-primary-container/70 pl-5 hover:text-lime-accent hover:bg-white/10 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-body-lg text-body-lg">Галерея</span>
+</a>
+<!-- Nav Item: Review -->
+<a class="flex items-center gap-3 py-3 text-on-primary-container/70 pl-5 hover:text-lime-accent hover:bg-white/10 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="rate_review">rate_review</span>
+<span class="font-body-lg text-body-lg">Проверка</span>
+</a>
+<!-- Nav Item: Export -->
+<a class="flex items-center gap-3 py-3 text-on-primary-container/70 pl-5 hover:text-lime-accent hover:bg-white/10 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="ios_share">ios_share</span>
+<span class="font-body-lg text-body-lg">Экспорт</span>
+</a>
+</div>
+<div class="px-6 mt-auto flex flex-col gap-4">
+<button class="bg-lime-accent text-deep-forest px-6 py-3 rounded-full font-bold flex items-center justify-center gap-2 shadow-cta hover:bg-hover-lime transition-all transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span class="">Новый проект</span>
+</button>
+<a class="flex items-center gap-3 py-3 text-on-primary-container/70 pl-2 hover:text-lime-accent transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-lg text-body-lg">Настройки</span>
+</a>
+</div>
+</nav>
+<!-- TopAppBar (Predicted Component) -->
+<header class="flex justify-between items-center w-full px-8 h-16 ml-64 max-w-[calc(100%-16rem)] sticky top-0 bg-surface/86 backdrop-blur-md z-40">
+<div class="flex items-center gap-4">
+<span class="font-headline-sm text-headline-sm font-bold text-deep-forest">Портал эксперта</span>
+</div>
+
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 w-[calc(100%-16rem)] min-h-[calc(100vh-64px)] p-12"><div aria-hidden="true" class="fixed inset-0 ml-64 flex items-center justify-center pointer-events-none z-0 opacity-[0.06] overflow-hidden"><img alt="" class="w-1/2 max-w-2xl object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0_2Y0tm3uGVlF8Gfca_R1RyS_geSvFBfHAVs9bs3AhsS8HO1V2n2pUiuTUPxarGy1HJThALCd3Y6epNUxLN6rb63Nbh3kQxcvbCbkImBctIRjXlme1T89GXSaqpP-E9Yg3ruJnsNB3EcN_Mu-CAdBI3Qkw2NgBCGhSszDftxdDuAo7wmkhexgKXSUCfii77eXbSW3rLLhTULGpLagM_sp5tr-qktuSXOscSWTKeTEpQPmjCMH6ZpSQ5HEvkF5AwSRWg"></div>
+<div class="max-w-container-max mx-auto">
+<!-- Hero Header Section -->
+<section class="mb-12">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-4 leading-tight">Превратите экспертизу в результат</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                    Наш AI-движок помогает преобразовать сложные медицинские или нутрициологические знания в простые и понятные образовательные материалы для родителей.
+                </p>
+</section>
+<!-- Input Blocks Layout -->
+<div class="space-y-12">
+<!-- Block 1: Article URL -->
+<div class="bg-white rounded-lg p-10 shadow-card border border-on-surface/5 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-2 h-full bg-lime-accent"></div>
+<div class="flex items-center gap-4 mb-8">
+<div class="w-12 h-12 rounded-full bg-light-sage flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl" data-icon="link">link</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary">URL статьи</h3>
+</div>
+<div class="flex flex-col md:flex-row gap-6 items-end">
+<div class="flex-grow w-full relative">
+<label class="font-label-badge text-label-badge text-on-surface-variant mb-2 block uppercase">Ссылка на источник</label>
+<input class="w-full bg-off-white border border-muted-border rounded-lg px-4 py-4 focus:ring-2 focus:ring-deep-forest focus:border-transparent outline-none transition-all font-body-lg text-body-lg placeholder:text-outline-variant" placeholder="https://..." type="text">
+</div>
+<button class="bg-lime-accent text-deep-forest px-8 py-4 rounded-full font-bold shadow-cta hover:bg-hover-lime transition-all transform active:scale-95 whitespace-nowrap h-[60px] flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+                            Извлечь контент
+                        </button>
+</div>
+</div>
+<!-- Visual Separator -->
+<div class="flex items-center justify-center gap-4 py-2">
+<div class="h-[1px] flex-grow bg-muted-border"></div>
+<span class="font-label-badge text-label-badge text-outline-variant font-bold">ИЛИ</span>
+<div class="h-[1px] flex-grow bg-muted-border"></div>
+</div>
+<!-- Block 2: Paste Article -->
+<div class="bg-light-sage rounded-lg p-10 shadow-card border border-on-surface/5">
+<div class="flex items-center gap-4 mb-8">
+<div class="w-12 h-12 rounded-full bg-white flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-3xl" data-icon="description">description</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Вставить статью</h3>
+</div>
+<div class="relative">
+<label class="font-label-badge text-label-badge text-on-surface-variant mb-2 block uppercase">Текст статьи</label>
+<textarea class="w-full h-80 bg-white border border-muted-border rounded-lg p-6 focus:ring-2 focus:ring-deep-forest focus:border-transparent outline-none transition-all font-body-lg text-body-lg placeholder:text-outline-variant resize-none" placeholder="Вставьте ваш текст здесь... система проанализирует ключевые нутрициологические или поведенческие аспекты."></textarea>
+</div>
+<div class="mt-8 flex justify-end">
+<button class="bg-deep-forest text-off-white px-10 py-4 rounded-full font-bold hover:bg-primary-container transition-all transform active:scale-95 shadow-md flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="next_plan">next_plan</span>
+                            Перейти к анализу
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (Predicted Component) -->
+<footer class="w-full ml-64 max-w-[calc(100%-16rem)] bg-surface-container-low flex justify-between items-center px-8 py-6">
+<div class="flex flex-col gap-1">
+<span class="font-label-badge text-label-badge text-secondary uppercase tracking-widest">NaturoPin</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2026 NaturoPin Автоматизация контента. Создано для экспертов.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary underline transition-opacity duration-200" href="#">Политика конфиденциальности</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary underline transition-opacity duration-200" href="#">Условия использования</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary underline transition-opacity duration-200" href="#">Поддержка</a>
+</div>
+</footer>
+<!-- Micro-interaction Scripts -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = document.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.parentElement.classList.add('scale-[1.01]');
+                });
+                input.addEventListener('blur', () => {
+                    input.parentElement.classList.remove('scale-[1.01]');
+                });
+            });
+
+            const navItems = document.querySelectorAll('nav a');
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    console.log('Навигация в:', item.textContent.trim());
+                });
+            });
+        });
+    </script>
+
+
+
+
+
+
+</body></html>

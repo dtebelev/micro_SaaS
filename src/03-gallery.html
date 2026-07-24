@@ -1,0 +1,331 @@
+<!DOCTYPE html><html class="light" lang="ru" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Галерея - Обзор наборов пинов Workshop</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;family=Inter:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Playfair+Display:wght@100..900&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(37, 40, 15, 0.08);
+        }
+        .sidebar-active-gradient {
+            background: linear-gradient(90deg, rgba(196, 216, 74, 0.1) 0%, rgba(196, 216, 74, 0) 100%);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D3D8B5;
+            border-radius: 10px;
+        }
+        .hover-lift {
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(37, 40, 15, 0.08);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "lime-accent": "#C4D84A",
+                      "secondary": "#586400",
+                      "surface-bright": "#fafcd5",
+                      "primary-fixed-dim": "#9ed3a1",
+                      "primary": "#0e401c",
+                      "on-tertiary-container": "#bec2a8",
+                      "tertiary-fixed": "#e1e5ca",
+                      "error-red": "#DC2626",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-on-surface": "#f1f4cd",
+                      "on-tertiary-fixed-variant": "#444935",
+                      "tertiary-fixed-dim": "#c5c9af",
+                      "surface-tint": "#386940",
+                      "light-sage": "#E0E4C9",
+                      "error-container": "#ffdad6",
+                      "background": "#fafcd5",
+                      "error": "#ba1a1a",
+                      "secondary-sage": "#A9B9AB",
+                      "muted-border": "#D3D8B5",
+                      "deep-forest": "#285831",
+                      "surface": "#fafcd5",
+                      "on-secondary": "#ffffff",
+                      "primary-container": "#285831",
+                      "surface-container-high": "#e9ebc5",
+                      "on-secondary-container": "#5c6900",
+                      "surface-variant": "#e3e5bf",
+                      "surface-container": "#eef1ca",
+                      "primary-fixed": "#baf0bc",
+                      "on-primary-container": "#98cd9b",
+                      "on-surface-variant": "#414940",
+                      "on-background": "#1a1d06",
+                      "outline": "#717970",
+                      "surface-container-highest": "#e3e5bf",
+                      "surface-dim": "#daddb7",
+                      "secondary-fixed": "#d9ed5d",
+                      "secondary-container": "#d6ea5a",
+                      "on-secondary-fixed": "#191e00",
+                      "secondary-fixed-dim": "#bdd143",
+                      "on-primary-fixed-variant": "#20502a",
+                      "off-white": "#FDFDFD",
+                      "on-primary-fixed": "#002109",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f4f7d0",
+                      "on-tertiary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "inverse-primary": "#9ed3a1",
+                      "inverse-surface": "#2f3218",
+                      "on-surface": "#1a1d06",
+                      "outline-variant": "#c1c9be",
+                      "tertiary": "#353926",
+                      "tertiary-container": "#4c503c",
+                      "on-secondary-fixed-variant": "#424b00",
+                      "on-error": "#ffffff",
+                      "hover-lime": "#B6CB38",
+                      "on-tertiary-fixed": "#191d0d"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "component-gap": "0.5rem",
+                      "gap-3-col": "1.5rem",
+                      "section-v-mobile": "4rem",
+                      "section-v-tablet": "5rem",
+                      "container-max": "1120px",
+                      "section-v-desktop": "6rem",
+                      "card-padding": "1.5rem",
+                      "gap-2-col": "2.5rem"
+              },
+              "fontFamily": {
+                      "headline-md": ["Playfair Display"],
+                      "body-sm": ["Inter"],
+                      "headline-sm": ["Playfair Display"],
+                      "headline-lg": ["Playfair Display"],
+                      "label-badge": ["Inter"],
+                      "headline-lg-mobile": ["Playfair Display"],
+                      "body-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-md": ["2.25rem", {"lineHeight": "1.15", "fontWeight": "700"}],
+                      "body-sm": ["0.75rem", {"lineHeight": "1.4", "fontWeight": "400"}],
+                      "headline-sm": ["1.25rem", {"lineHeight": "1.25", "fontWeight": "700"}],
+                      "headline-lg": ["3.4rem", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-badge": ["0.75rem", {"lineHeight": "1.0", "letterSpacing": "0.08em", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["2.25rem", {"lineHeight": "1.1", "fontWeight": "700"}],
+                      "body-lg": ["1rem", {"lineHeight": "1.7", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen flex overflow-x-hidden">
+<!-- SIDE BAR NAVIGATION -->
+<aside class="bg-primary-container h-screen w-64 fixed left-0 top-0 flex flex-col py-8 shadow-md z-50">
+<div class="px-6 mb-12">
+<h1 class="font-headline-sm text-headline-sm text-on-primary-container font-bold tracking-tight">NaturoPin 1.0</h1>
+<p class="font-body-sm text-body-sm text-on-primary-container/60">Автоматизация контента</p>
+</div>
+<nav class="flex-1 space-y-2">
+<!-- Source Tab -->
+<a class="flex items-center gap-4 py-3 text-on-primary-container/70 pl-5 hover:text-lime-accent hover:bg-white/10 transition-all group" href="#">
+<span class="material-symbols-outlined text-[20px]">source</span>
+<span class="font-body-lg text-body-lg">Источник</span>
+</a>
+<!-- Gallery Tab (ACTIVE) -->
+<a class="flex items-center gap-4 py-3 text-lime-accent font-bold border-l-4 border-lime-accent pl-4 bg-white/5 group" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">grid_view</span>
+<span class="font-body-lg text-body-lg">Галерея</span>
+</a>
+<!-- Review Tab -->
+<a class="flex items-center gap-4 py-3 text-on-primary-container/70 pl-5 hover:text-lime-accent hover:bg-white/10 transition-all group" href="#">
+<span class="material-symbols-outlined text-[20px]">rate_review</span>
+<span class="font-body-lg text-body-lg">Проверка</span>
+</a>
+<!-- Export Tab -->
+<a class="flex items-center gap-4 py-3 text-on-primary-container/70 pl-5 hover:text-lime-accent hover:bg-white/10 transition-all group" href="#">
+<span class="material-symbols-outlined text-[20px]">ios_share</span>
+<span class="font-body-lg text-body-lg">Экспорт</span>
+</a>
+</nav>
+<div class="px-5 mt-auto space-y-4">
+<button class="w-full bg-lime-accent text-deep-forest font-bold py-3 rounded-full flex items-center justify-center gap-2 scale-95 active:scale-90 transition-transform shadow-[0_12px_26px_rgba(196,216,74,0.28)]">
+<span class="material-symbols-outlined">add</span>
+<span class="">Новый проект</span>
+</button>
+<a class="flex items-center gap-4 py-3 text-on-primary-container/70 pl-5 hover:text-lime-accent hover:bg-white/10 transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-lg text-body-lg">Настройки</span>
+</a>
+
+</div>
+</aside>
+<!-- MAIN CONTENT AREA -->
+<main class="flex-1 ml-64 flex flex-col min-h-screen"><div aria-hidden="true" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] opacity-[0.06] pointer-events-none z-0 select-none">https://lh3.googleusercontent.com/aida-public/AB6AXuB4axvzdUyAJwYtqirgIQyYGkN_Eo5ny9p9y3DR5U74-IkGkp8BdhCpVrMmCoRWx0i855dNXo7lT_ViJSUcBu2p70LuLfIpQxxc3_0tdOqmzAdFraHQVWleDiRG9BvRbZwmSLHptBwxKgOADBIpqbjVKvAuNgtaBAveDA2dtg7Q7eY34pu8YJMqM-1E7muFn3CzIe8iXrDOgw5oeG0Seg5NkV918CpMBsIWYNKras7kX_Pi0usFs6zYrj9xyAaGmiJzOA</div>
+<!-- TOP APP BAR -->
+<header class="flex justify-between items-center w-full px-8 h-16 sticky top-0 bg-surface/86 backdrop-blur-md z-40">
+<div class="flex items-center gap-8">
+<h2 class="font-headline-sm text-headline-sm font-bold text-deep-forest">Галерея</h2>
+
+</div>
+
+</header>
+<!-- CONTENT CANVAS -->
+<div class="p-8 max-w-[1120px] mx-auto w-full flex-1">
+<!-- HEADER SECTION -->
+<div class="mb-12 flex justify-between items-end">
+<div>
+<span class="font-label-badge text-label-badge text-secondary bg-light-sage px-3 py-1 rounded-full uppercase tracking-widest mb-4 inline-block">Курируемая библиотека</span>
+<h1 class="font-headline-lg text-headline-lg text-deep-forest">Образовательные наборы пинов</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2 max-w-2xl">Просмотрите созданные экспертные материалы. Каждый пин оптимизирован для обучения родителей и нутритивной поддержки.</p>
+</div>
+<div class="flex gap-3">
+
+</div>
+</div>
+<!-- BENTO GRID GALLERY -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+<!-- FEATURED CARD (Spans 2 cols) -->
+<div class="lg:col-span-2 group relative overflow-hidden rounded-lg bg-white border border-muted-border shadow-card hover-lift cursor-pointer">
+<div class="h-80 w-full overflow-hidden">
+<img alt="Ингредиенты для детского питания" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOeJjYILucovDbODNI3wtq7U_qJUT_SSt1GXlnhrTLl2Gat7QA-90dyoMstggNaU0ojHnSFFJuzo3BXRD9iuzjn912Aysonm8Gg5acDALEVLolDG3zM1D6pSmhRuN3LGhOH6HHrVkZ__mNioH9Cb5GRJfYi_xgQeYpLsRwSLFw4yiOmXNOb7vV0pB6S1PnzapsPmISdarBGFG4ge3fS8SapTmVy4rBsaid2ZG6C059TzpDB1kTUV-N">
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<span class="bg-lime-accent text-deep-forest font-label-badge text-[10px] px-2.5 py-0.5 rounded-full uppercase mb-2 inline-block">Рекомендуемый набор</span>
+<h3 class="font-headline-sm text-headline-sm text-deep-forest">Введение прикорма: 6-месячный план</h3>
+</div>
+<span class="text-on-surface-variant/40 text-sm">24 Актива</span>
+</div>
+<div class="flex gap-2">
+<span class="bg-light-sage/40 text-secondary text-[11px] font-bold px-3 py-1 rounded-full">Питание</span>
+<span class="bg-light-sage/40 text-secondary text-[11px] font-bold px-3 py-1 rounded-full">Развитие</span>
+</div>
+</div>
+</div>
+<!-- CARD 2 -->
+<div class="group relative overflow-hidden rounded-lg bg-white border border-muted-border shadow-card hover-lift cursor-pointer">
+<div class="h-64 w-full overflow-hidden bg-surface-container">
+<img alt="Иллюстрация пищеварительной системы" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpCQvvuDT8jtflKMcquNH12rMgEcMNZOB6381t8T8_de0tVYwEP86_kVq5PGKQY_ZwMefY_ZOogt_oMHD0Van8NV108x_GClkgUUEULI4Dzby4NVtx6jvrcXbrsJJAcsnUVwftlSVL9f7oMDCwKoTiSa2OzqndyUnDssMsg_7D6uX-xmfYUMjMXoNa1EYuD3z-BXDZc49K4npZyMOrOgpWafvmtqgF76_O_4XPMCt0xvODfeMJ3GKj">
+</div>
+<div class="p-5">
+<span class="text-secondary font-label-badge text-[10px] px-2.5 py-0.5 border border-muted-border rounded-full uppercase mb-2 inline-block">Экспертная серия</span>
+<h3 class="font-headline-sm text-headline-sm text-deep-forest text-lg">Основы здоровья кишечника</h3>
+<p class="text-on-surface-variant text-sm mt-1 line-clamp-2">Объяснение микробиома родителям с помощью простых визуальных материалов.</p>
+<div class="mt-4 flex items-center justify-between">
+<span class="text-on-surface-variant/60 text-xs">Обновлено 2ч назад</span>
+<button class="text-lime-accent"><span class="material-symbols-outlined">favorite</span></button>
+</div>
+</div>
+</div>
+<!-- CARD 3 -->
+<div class="group relative overflow-hidden rounded-lg bg-white border border-muted-border shadow-card hover-lift cursor-pointer">
+<div class="h-64 w-full overflow-hidden">
+<img alt="Миндальное молоко и орехи" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMlTfwaAria4L95VcIst9v3tZAmmbVtAX1uokmk0_Apps5I0HUMCVjcEKRba3r1qvTBYTxnWFA7CgyG90a78vCa1sp2zR9-9xWz26fH-EUiByi44PFIaBj4Fak8DV2xB5GU7Is9XYVDuJop1ctcMvDR4ilLvjP6RHPWN2MKfTJh4lD9_2jfUZ0DdaSaADSevOMVruiTBBRL_vjhmZBZfKlVH519rI8b1SV62fn5hBb17Ypy0y3ctgw">
+</div>
+<div class="p-5">
+<span class="text-secondary font-label-badge text-[10px] px-2.5 py-0.5 border border-muted-border rounded-full uppercase mb-2 inline-block">Быстрое руководство</span>
+<h3 class="font-headline-sm text-headline-sm text-deep-forest text-lg">Осведомленность об аллергии</h3>
+<p class="text-on-surface-variant text-sm mt-1 line-clamp-2">Безопасное введение основных аллергенов в контролируемой среде.</p>
+<div class="mt-4 flex items-center justify-between">
+<span class="text-on-surface-variant/60 text-xs">12 Пинов</span>
+<button class="text-on-surface-variant/40 hover:text-lime-accent"><span class="material-symbols-outlined">download</span></button>
+</div>
+</div>
+</div>
+<!-- CARD 4 -->
+<div class="group relative overflow-hidden rounded-lg bg-white border border-muted-border shadow-card hover-lift cursor-pointer">
+<div class="h-64 w-full overflow-hidden">
+<img alt="Ягоды в миске" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2vAx3q1mwsylnZlzYmS3iNseCMMu41xVGLdKVODRTq-phoJcr1my7NM1ED5arEfLmv0rkbf76Vr8AB3kdNPIvUYgyRv0nk4Be4-GkAT0-3GkfK2l5Cwtl-tzdd1sEXz6WehIu0nELz7YwzPS4RKsrxWkpqZCaJ6J5Fp7bQtvWQaZzEp1MWkDO3mUJpkrNirEnBhda4B4v23TPGzY-t8yham7ILPid9C8ZJAfsobXHWXiyUOGTBUdT">
+</div>
+<div class="p-5">
+<span class="text-secondary font-label-badge text-[10px] px-2.5 py-0.5 border border-muted-border rounded-full uppercase mb-2 inline-block">Визуальный рецепт</span>
+<h3 class="font-headline-sm text-headline-sm text-deep-forest text-lg">Ягодное пюре</h3>
+<p class="text-on-surface-variant text-sm mt-1 line-clamp-2">Витаминные фруктовые комбинации для сенсорного развития.</p>
+<div class="mt-4 flex items-center justify-between">
+<span class="text-on-surface-variant/60 text-xs">8 Активов</span>
+<button class="text-on-surface-variant/40"><span class="material-symbols-outlined">more_horiz</span></button>
+</div>
+</div>
+</div>
+<!-- CARD 5 -->
+<div class="group relative overflow-hidden rounded-lg bg-white border border-muted-border shadow-card hover-lift cursor-pointer">
+<div class="h-64 w-full overflow-hidden">
+<img alt="Рука ребенка с брокколи" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDI9XmDx0CuR1YCXErblOrTzhec09HLOXJo8_7AYZZEok8v7pEAVGyOb_Ie0bwIx9Vz7ZQRLNp7CrB7N3ftlrLH1u9zHKEn2yvPmfaBqbxx0GiUIgL0-n2LMnc3IP7u1NrBdYRdFnDNmHPDUhYPIwOUw4K2gM5wKx3a6rYnxXfngZvTERkgnwHFZQTL5dNJWW8chYgvksiFSn3A-_vl4PmTrGrPY1hl1atTGFtrmG0oQQwikVJOACGG">
+</div>
+<div class="p-5">
+<span class="text-secondary font-label-badge text-[10px] px-2.5 py-0.5 border border-muted-border rounded-full uppercase mb-2 inline-block">Этапы развития</span>
+<h3 class="font-headline-sm text-headline-sm text-deep-forest text-lg">Навыки самостоятельного питания</h3>
+<p class="text-on-surface-variant text-sm mt-1 line-clamp-2">Визуальные подсказки о том, когда ваш ребенок готов попробовать еду кусочками.</p>
+<div class="mt-4 flex items-center justify-between">
+<span class="text-on-surface-variant/60 text-xs">15 Активов</span>
+<button class="text-lime-accent"><span class="material-symbols-outlined" style="font-variation-settings: &quot;FILL&quot; 1;">star</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- EMPTY STATE / CTA -->
+<div class="glass-card rounded-lg p-12 text-center border-dashed border-2 border-muted-border">
+<div class="w-16 h-16 bg-lime-accent/20 rounded-full flex items-center justify-center mx-auto mb-6">
+<span class="material-symbols-outlined text-deep-forest text-3xl">auto_awesome</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-deep-forest">Получить больше идей</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto mt-2">Нужен контент для определенной возрастной группы? Наш AI-движок создаст ваш следующий набор пинов.</p>
+<button class="mt-8 bg-lime-accent text-deep-forest font-bold py-3 px-10 rounded-full hover:bg-hover-lime transition-all transform hover:-translate-y-1 shadow-[0_12px_26px_rgba(196,216,74,0.28)]">
+                    Создать новый набор пинов
+                </button>
+</div>
+</div>
+<!-- FOOTER -->
+<footer class="flex justify-between items-center px-8 py-6 bg-surface-container-low w-full border-t border-muted-border/30">
+<div>
+<p class="font-body-sm text-body-sm text-secondary">© 2026 NaturoPin Content Automation. Создано для экспертов.</p>
+</div>
+<div class="flex gap-6">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary underline transition-opacity duration-200" href="#">Политика конфиденциальности</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary underline transition-opacity duration-200" href="#">Условия использования</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary underline transition-opacity duration-200" href="#">Поддержка</a>
+</div>
+</footer>
+</main>
+<script>
+        // Micro-interactions
+        document.querySelectorAll('.hover-lift').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Potential for haptic or sound effects if desired
+            });
+        });
+
+        // Search Input focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        if(searchInput) {
+            searchInput.addEventListener('focus', () => {
+                searchInput.parentElement.classList.add('ring-2', 'ring-lime-accent/30');
+            });
+            searchInput.addEventListener('blur', () => {
+                searchInput.parentElement.classList.remove('ring-2', 'ring-lime-accent/30');
+            });
+        }
+    </script>
+
+
+</body></html>

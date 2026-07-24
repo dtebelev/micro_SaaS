@@ -1,0 +1,265 @@
+<!DOCTYPE html><html class="light" lang="ru" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>MetaVoice Analysis - Loading</title>
+<!-- Google Fonts: Playfair Display & Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Playfair+Display:wght@700;800&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "lime-accent": "#C4D84A",
+                    "secondary": "#586400",
+                    "surface-bright": "#fafcd5",
+                    "primary-fixed-dim": "#9ed3a1",
+                    "primary": "#0e401c",
+                    "on-tertiary-container": "#bec2a8",
+                    "tertiary-fixed": "#e1e5ca",
+                    "error-red": "#DC2626",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-on-surface": "#f1f4cd",
+                    "on-tertiary-fixed-variant": "#444935",
+                    "tertiary-fixed-dim": "#c5c9af",
+                    "surface-tint": "#386940",
+                    "light-sage": "#E0E4C9",
+                    "error-container": "#ffdad6",
+                    "background": "#fafcd5",
+                    "error": "#ba1a1a",
+                    "secondary-sage": "#A9B9AB",
+                    "muted-border": "#D3D8B5",
+                    "deep-forest": "#285831",
+                    "surface": "#fafcd5",
+                    "on-secondary": "#ffffff",
+                    "primary-container": "#285831",
+                    "surface-container-high": "#e9ebc5",
+                    "on-secondary-container": "#5c6900",
+                    "surface-variant": "#e3e5bf",
+                    "surface-container": "#eef1ca",
+                    "primary-fixed": "#baf0bc",
+                    "on-primary-container": "#98cd9b",
+                    "on-surface-variant": "#414940",
+                    "on-background": "#1a1d06",
+                    "outline": "#717970",
+                    "surface-container-highest": "#e3e5bf",
+                    "surface-dim": "#daddb7",
+                    "secondary-fixed": "#d9ed5d",
+                    "secondary-container": "#d6ea5a",
+                    "on-secondary-fixed": "#191e00",
+                    "secondary-fixed-dim": "#bdd143",
+                    "on-primary-fixed-variant": "#20502a",
+                    "off-white": "#FDFDFD",
+                    "on-primary-fixed": "#002109",
+                    "on-primary": "#ffffff",
+                    "surface-container-low": "#f4f7d0",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "inverse-primary": "#9ed3a1",
+                    "inverse-surface": "#2f3218",
+                    "on-surface": "#1a1d06",
+                    "outline-variant": "#c1c9be",
+                    "tertiary": "#353926",
+                    "tertiary-container": "#4c503c",
+                    "on-secondary-fixed-variant": "#424b00",
+                    "on-error": "#ffffff",
+                    "hover-lime": "#B6CB38",
+                    "on-tertiary-fixed": "#191d0d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "component-gap": "0.5rem",
+                    "gap-3-col": "1.5rem",
+                    "section-v-mobile": "4rem",
+                    "section-v-tablet": "5rem",
+                    "container-max": "1120px",
+                    "section-v-desktop": "6rem",
+                    "card-padding": "1.5rem",
+                    "gap-2-col": "2.5rem"
+            },
+            "fontFamily": {
+                    "headline-md": ["Playfair Display"],
+                    "body-sm": ["Inter"],
+                    "headline-sm": ["Playfair Display"],
+                    "headline-lg": ["Playfair Display"],
+                    "label-badge": ["Inter"],
+                    "headline-lg-mobile": ["Playfair Display"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["2.25rem", {"lineHeight": "1.15", "fontWeight": "700"}],
+                    "body-sm": ["0.75rem", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "headline-sm": ["1.25rem", {"lineHeight": "1.25", "fontWeight": "700"}],
+                    "headline-lg": ["3.4rem", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-badge": ["0.75rem", {"lineHeight": "1.0", "letterSpacing": "0.08em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["2.25rem", {"lineHeight": "1.1", "fontWeight": "700"}],
+                    "body-lg": ["1rem", {"lineHeight": "1.7", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .progress-shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite linear;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .loading-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen overflow-hidden flex">
+<!-- SIDEBAR: Using Shared Component Logic -->
+<aside class="bg-primary-container h-screen w-64 fixed left-0 top-0 flex flex-col py-8 shadow-md z-50">
+<!-- Brand Header -->
+<div class="px-8 mb-12">
+<h1 class="font-headline-sm text-headline-sm text-on-primary-container font-bold">NaturoPin 1.0</h1>
+<p class="font-body-sm text-body-sm text-on-primary-container/60">Автоматизация контента</p>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex-1 px-4 space-y-2">
+<!-- Review is active based on "Analysis" intent -->
+<a class="flex items-center space-x-3 text-on-primary-container/70 pl-5 h-12 rounded-lg hover:text-lime-accent hover:bg-white/10 transition-all scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">source</span>
+<span class="font-body-lg text-body-lg">Источник</span>
+</a>
+<a class="flex items-center space-x-3 text-on-primary-container/70 pl-5 h-12 rounded-lg hover:text-lime-accent hover:bg-white/10 transition-all scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-body-lg text-body-lg">Галерея</span>
+</a>
+<a class="flex items-center space-x-3 text-lime-accent font-bold border-l-4 border-lime-accent pl-4 bg-white/5 h-12 transition-all scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">rate_review</span>
+<span class="font-body-lg text-body-lg">Проверка</span>
+</a>
+<a class="flex items-center space-x-3 text-on-primary-container/70 pl-5 h-12 rounded-lg hover:text-lime-accent hover:bg-white/10 transition-all scale-95 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">ios_share</span>
+<span class="font-body-lg text-body-lg">Экспорт</span>
+</a>
+</nav>
+<!-- Footer Tab -->
+<div class="px-4 mt-auto">
+<button class="flex items-center space-x-3 text-on-primary-container/70 pl-5 h-12 w-full rounded-lg hover:text-lime-accent hover:bg-white/10 transition-all scale-95 active:scale-90 transition-transform">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-lg text-body-lg">Настройки</span>
+</button>
+</div>
+</aside>
+<!-- MAIN CONTENT AREA -->
+<main class="ml-64 flex-1 relative flex flex-col items-center justify-center min-h-screen">
+<!-- TopAppBar (Simulated) -->
+<header class="fixed top-0 right-0 left-64 bg-surface/86 backdrop-blur-md flex justify-between items-center px-8 h-16 z-40">
+<h2 class="font-headline-sm text-headline-sm font-bold text-deep-forest">анализ</h2>
+
+</header>
+<!-- Loading Canvas -->
+<div class="max-w-[800px] w-full px-8 text-center flex flex-col items-center">
+<!-- Animated Visual Anchor -->
+<div class="relative w-64 h-64 mb-12 flex items-center justify-center">
+<!-- Decorative blurred background circles -->
+<div class="absolute inset-0 bg-lime-accent/10 blur-[60px] rounded-full pulse-slow"></div>
+<div class="absolute inset-4 bg-secondary-sage/20 blur-[40px] rounded-full pulse-slow" style="animation-delay: 1s"></div>
+<!-- Central Icon with floating effect -->
+<div class="relative bg-off-white w-32 h-32 rounded-full flex items-center justify-center shadow-lg loading-float" style="transform: translate(6.275px, -6.075px);">
+<span class="material-symbols-outlined text-deep-forest !text-5xl" style="font-variation-settings: &quot;FILL&quot; 1;">analytics</span>
+</div>
+<!-- Particle accents (CSS purely) -->
+<div class="absolute top-0 right-0 w-3 h-3 bg-lime-accent rounded-full pulse-slow"></div>
+<div class="absolute bottom-10 left-0 w-2 h-2 bg-deep-forest rounded-full pulse-slow" style="animation-delay: 1.5s"></div>
+</div>
+<!-- Loading Headline -->
+<h2 class="font-headline-md text-headline-md text-deep-forest mb-8">NaturoPin анализирует материал
+            </h2>
+<!-- Progress Container -->
+<div class="w-full max-w-lg mb-12">
+<div class="flex justify-between mb-2 text-deep-forest/70 font-label-badge text-label-badge">
+<span class="">ПРОГРЕСС АНАЛИЗА</span>
+<span id="progress-percent" class="">98%</span>
+</div>
+<div class="h-3 w-full bg-light-sage rounded-full overflow-hidden relative">
+<!-- Progress Fill -->
+<div class="h-full bg-lime-accent transition-all duration-700 ease-out relative" id="progress-bar" style="width: 98%;">
+<!-- Shimmering overlay -->
+<div class="absolute inset-0 progress-shimmer"></div>
+</div>
+</div>
+</div>
+<!-- Contextual Status Message -->
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl leading-relaxed">
+                Формируем смысловое ядро, подбираем фон и проверяем сенсорную чистоту дизайна
+            </p>
+<!-- Metadata Reference -->
+</div>
+<!-- Decorative Pattern (Preserving Brand Identity) -->
+</main>
+<!-- Footer: Shared Component Logic -->
+<footer class="fixed bottom-0 right-0 left-64 bg-surface-container-low flex justify-between items-center px-8 py-6 z-40">
+<p class="font-body-sm text-body-sm text-secondary">© 2026 NaturoPin Автоматизация контента. Создано для экспертов.</p>
+<div class="flex space-x-6">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary underline transition-opacity duration-200" href="#">Политика конфиденциальности</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary underline transition-opacity duration-200" href="#">Условия использования</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary underline transition-opacity duration-200" href="#">Поддержка</a>
+</div>
+</footer>
+<script>
+        // Micro-interaction: Dynamic Progress Simulation
+        const bar = document.getElementById('progress-bar');
+        const text = document.getElementById('progress-percent');
+        let progress = 64;
+
+        function updateProgress() {
+            if (progress < 98) {
+                progress += Math.random() * 2;
+                if (progress > 98) progress = 98;
+                bar.style.width = progress + '%';
+                text.innerText = Math.floor(progress) + '%';
+            }
+            setTimeout(updateProgress, 1500 + Math.random() * 2000);
+        }
+
+        updateProgress();
+
+        // Subtle parallax mouse effect for the anchor icon
+        document.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX - window.innerWidth / 2) / 80;
+            const moveY = (e.clientY - window.innerHeight / 2) / 80;
+            const floatElement = document.querySelector('.loading-float');
+            if (floatElement) {
+                floatElement.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            }
+        });
+    </script>
+
+
+
+
+
+
+</body></html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html><html class="light" lang="ru" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Политика конфиденциальности | Naturonata</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        
+        body {
+            background-color: #fafcd5;
+            color: #1a1d06; /* Map to on-surface */
+        }
+
+        .privacy-card {
+            box-shadow: 0 10px 30px -12px rgba(40, 88, 49, 0.08);
+        }
+
+        /* Glassmorphism for Top Bar */
+        .glass-header {
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+    </style>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#fafcd5",
+                        "on-background": "#1a1d06",
+                        "secondary-fixed": "#d9ed5d",
+                        "primary": "#0e401c",
+                        "on-secondary-container": "#5c6900",
+                        "on-primary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#285831",
+                        "on-primary-fixed-variant": "#20502a",
+                        "secondary": "#586400",
+                        "on-primary-container": "#98cd9b",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#d6ea5a",
+                        "surface-container": "#eef1ca",
+                        "outline": "#717970",
+                        "background": "#fafcd5",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f4f7d0",
+                        "on-tertiary-fixed-variant": "#444935",
+                        "on-surface-variant": "#414940",
+                        "surface-container-highest": "#e3e5bf",
+                        "surface-container-high": "#e9ebc5",
+                        "inverse-primary": "#9ed3a1",
+                        "on-tertiary-container": "#bec2a8",
+                        "primary-fixed": "#baf0bc",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#2f3218",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c1c9be",
+                        "tertiary-fixed": "#e1e5ca",
+                        "on-tertiary-fixed": "#191d0d",
+                        "on-primary-fixed": "#002109",
+                        "on-surface": "#1a1d06",
+                        "secondary-fixed-dim": "#bdd143",
+                        "tertiary-fixed-dim": "#c5c9af",
+                        "surface-tint": "#386940",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#4c503c",
+                        "surface-bright": "#fafcd5",
+                        "tertiary": "#353926",
+                        "primary-fixed-dim": "#9ed3a1",
+                        "on-secondary-fixed-variant": "#424b00",
+                        "surface-dim": "#daddb7",
+                        "inverse-on-surface": "#f1f4cd",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#191e00",
+                        "surface-variant": "#e3e5bf"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-v-tablet": "5rem",
+                        "section-v-desktop": "6rem",
+                        "gap-3-col": "1.5rem",
+                        "component-gap": "0.5rem",
+                        "card-padding": "1.5rem",
+                        "section-v-mobile": "4rem",
+                        "container-max": "1120px",
+                        "gap-2-col": "2.5rem"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Playfair Display"],
+                        "label-badge": ["Inter"],
+                        "headline-lg-mobile": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["0.75rem", {"lineHeight": "1.4", "fontWeight": "400"}],
+                        "headline-sm": ["1.25rem", {"lineHeight": "1.25", "fontWeight": "700"}],
+                        "headline-md": ["2.25rem", {"lineHeight": "1.15", "fontWeight": "700"}],
+                        "body-lg": ["1rem", {"lineHeight": "1.7", "fontWeight": "400"}],
+                        "headline-lg": ["3.4rem", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-badge": ["0.75rem", {"lineHeight": "1.0", "letterSpacing": "0.08em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["2.25rem", {"lineHeight": "1.1", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Sidebar Navigation Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low dark:bg-surface-container-lowest shadow-sm flex flex-col h-full py-8 px-4 z-40 hidden md:flex">
+<div class="mb-12 px-4">
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">NaturoPin 1.0</h1>
+<p class="font-label-badge text-label-badge text-outline uppercase tracking-widest mt-1">Автоматизация контента</p>
+</div>
+<nav class="flex-1 space-y-2">
+<!-- Labels and Icons exactly as provided in JSON -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="source">source</span>
+<span class="font-body-lg text-body-lg">Источник</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-body-lg text-body-lg">Галерея</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="fact_check">fact_check</span>
+<span class="font-body-lg text-body-lg">Проверка</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="ios_share">ios_share</span>
+<span class="font-body-lg text-body-lg">Экспорт</span>
+</a>
+</nav>
+
+</aside>
+<!-- Main Canvas Area -->
+<main class="md:ml-64 min-h-screen flex flex-col">
+<!-- Top App Bar (Suppressing global nav, keeping brand anchor for context) -->
+<header class="sticky top-0 z-30 bg-surface/80 backdrop-blur-md px-6 py-4 flex justify-between items-center w-full">
+<div class="flex items-center gap-2">
+<button class="md:hidden p-2 text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h2 class="font-headline-md text-headline-md text-primary tracking-tight">Политика конфиденциальности</h2>
+</div>
+
+</header>
+<!-- Content Container -->
+<div class="max-w-container-max mx-auto px-6 py-12 md:py-16 w-full flex-1">
+<!-- Hero Title Section -->
+<div class="mb-16 max-w-3xl">
+<span class="font-label-badge text-label-badge text-secondary uppercase tracking-[0.2em] mb-4 block">Обновлено: Сентябрь 2024</span>
+<h1 class="font-headline-lg text-headline-lg text-primary mb-6">Ваша безопасность и спокойствие — наш приоритет.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                    В NaturoPin мы понимаем деликатность информации, касающейся здоровья и питания ваших детей. Мы стремимся к абсолютной прозрачности в том, как мы собираем, используем и защищаем ваши данные.
+                </p>
+</div>
+<!-- Policy Grid -->
+<div class="grid grid-cols-1 gap-8 mb-24">
+<!-- Section 1: Сбор данных -->
+<section class="privacy-card bg-surface-container-lowest p-8 md:p-12 rounded-xl border border-surface-container transition-all hover:shadow-md" style="opacity: 1; transform: translateY(0px); transition: 0.6s cubic-bezier(0.22, 1, 0.36, 1);">
+<div class="flex items-start gap-6">
+<div class="hidden md:flex w-12 h-12 bg-surface-container rounded-full items-center justify-center text-primary-container shrink-0">
+<span class="material-symbols-outlined">database</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary mb-6">1. Сбор персональных данных</h2>
+<div class="font-body-lg text-body-lg text-on-surface-variant space-y-4">
+<p class="">Мы собираем информацию только в том объеме, который необходим для предоставления экспертных рекомендаций по питанию:</p>
+<ul class="list-disc pl-5 space-y-2">
+<li class=""><strong>Регистрационные данные:</strong> Имя, адрес электронной почты и настройки профиля.</li>
+<li class=""><strong>Профили здоровья:</strong> Возраст ребенка, специфические диетические потребности, аллергии и непереносимости.</li>
+<li class=""><strong>Техническая информация:</strong> IP-адрес, тип устройства и данные об использовании приложения для оптимизации работы сервиса.</li>
+</ul>
+<p class="pt-4 italic text-sm">Мы никогда не собираем информацию без вашего явного согласия.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Использование данных -->
+<section class="privacy-card bg-surface-container-lowest p-8 md:p-12 rounded-xl border border-surface-container transition-all hover:shadow-md" style="opacity: 1; transform: translateY(0px); transition: 0.6s cubic-bezier(0.22, 1, 0.36, 1);">
+<div class="flex items-start gap-6">
+<div class="hidden md:flex w-12 h-12 bg-surface-container rounded-full items-center justify-center text-primary-container shrink-0">
+<span class="material-symbols-outlined">insights</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary mb-6">2. Использование вашей информации</h2>
+<div class="font-body-lg text-body-lg text-on-surface-variant space-y-4">
+<p class="">Ваши данные используются исключительно в целях улучшения вашего опыта взаимодействия с платформой:</p>
+<div class="grid md:grid-cols-2 gap-6 mt-6">
+<div class="bg-surface p-6 rounded-lg">
+<h4 class="font-bold text-primary mb-2">Персонализация</h4>
+<p class="text-sm">Создание индивидуальных планов питания и подбор нутриентов на основе введенных вами данных.</p>
+</div>
+<div class="bg-surface p-6 rounded-lg">
+<h4 class="font-bold text-primary mb-2">Обратная связь</h4>
+<p class="text-sm">Информирование о важных изменениях в программе или обновлениях наших экспертных баз.</p>
+</div>
+</div>
+<p class="">Мы строго придерживаемся принципа минимизации данных и не используем вашу медицинскую информацию для рекламы сторонних продуктов.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Защита данных -->
+<section class="privacy-card bg-surface-container-lowest p-8 md:p-12 rounded-xl border border-surface-container transition-all hover:shadow-md" style="opacity: 1; transform: translateY(0px); transition: 0.6s cubic-bezier(0.22, 1, 0.36, 1);">
+<div class="flex items-start gap-6">
+<div class="hidden md:flex w-12 h-12 bg-surface-container rounded-full items-center justify-center text-primary-container shrink-0">
+<span class="material-symbols-outlined">security</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary mb-6">3. Безопасность и хранение</h2>
+<div class="font-body-lg text-body-lg text-on-surface-variant space-y-4">
+<p class="">Защита ваших данных — это фундамент нашего доверия:</p>
+<ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span>
+<span class="">Сквозное шифрование (SSL/TLS)</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span>
+<span class="">Регулярные аудиты безопасности</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span>
+<span class="">Хранение в защищенных облаках</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: &quot;FILL&quot; 1;">check_circle</span>
+<span class="">Ограниченный доступ сотрудников</span>
+</li>
+</ul>
+<p class="mt-4">Все данные хранятся в соответствии с международными стандартами GDPR и локальными законодательными актами.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Help CTA -->
+<div class="bg-primary-container text-on-primary-container rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-8">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-primary mb-2">Остались вопросы по безопасности?</h3>
+<p class="font-body-lg text-body-lg opacity-90">Наша служба поддержки готова предоставить детальную информацию о протоколах защиты.</p>
+</div>
+<button class="bg-secondary-container text-on-secondary-container px-8 py-4 rounded-full font-bold hover:translate-y-[-1px] transition-transform shadow-lg active:scale-95 whitespace-nowrap">
+                        Связаться с нами
+                    </button>
+</div>
+</div>
+</div>
+<!-- Footer Shell -->
+<footer class="w-full py-12 bg-surface-container dark:bg-surface-container-high">
+<div class="max-w-container-max mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="text-center md:text-left">
+<h4 class="font-headline-sm text-headline-sm text-primary mb-1">NaturoPin</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2026 NaturoPin. Все права защищены.&nbsp;</p>
+</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="font-label-badge text-label-badge text-primary font-bold underline hover:text-primary transition-colors" href="#">Политика конфиденциальности</a>
+<a class="font-label-badge text-label-badge text-on-surface-variant hover:text-primary transition-colors" href="#">Условия использования</a>
+<a class="font-label-badge text-label-badge text-on-surface-variant hover:text-primary transition-colors" href="#">Поддержка</a>
+<a class="font-label-badge text-label-badge text-on-surface-variant hover:text-primary transition-colors" href="#">Контакты</a>
+</div>
+</div>
+</footer>
+</main>
+<script>
+        // Micro-interaction for sidebar expansion on mobile (conceptual)
+        document.querySelector('button.md\\:hidden').addEventListener('click', function() {
+            // This would normally trigger a mobile menu drawer
+            alert('Мобильное меню в разработке. Пожалуйста, используйте десктопную версию.');
+        });
+
+        // Soft entry animation for cards
+        window.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.privacy-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s cubic-bezier(0.22, 1, 0.36, 1)';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+
+
+</body></html>
