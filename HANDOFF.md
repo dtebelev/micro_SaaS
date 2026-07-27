@@ -87,12 +87,20 @@ npm run dev        # web:5173 + api:8787 (concurrently)
 - FLUX-сцена уже языконезависима (текст на картинке не рисуем). UI-строки — вынести в словарь (i18n).
 - RTL не требуется.
 
-### 4. Деплой на Vercel
-- Фронт (Vite) — на Vercel штатно. **Проблема:** бэк — Node/Express (`server/index.js`), а Vercel = serverless.
-  Варианты: (а) перенести роуты в `api/*.js` (Vercel Serverless Functions), (б) вынести трубу в **Supabase Edge Functions**.
-  Рекомендация: тонкие Vercel-функции `api/generate`, `api/regenerate`, переиспользуя модули `server/pipeline/*`
-  (они уже чистые). Долгую генерацию — в фоне (или очередь), фронт поллит статус проекта (как сейчас).
-- Секреты — в Vercel Project → Environment Variables (не во фронт). `VITE_*` — публичные (можно во фронт).
+### 4. Деплой на Vercel — ✅ БЭКЕНД ПЕРЕНЕСЁН (осталось задеплоить)
+- **Сделано (2026-07-26):** PWA (`vite-plugin-pwa`, иконки в `public/`), serverless-архитектура:
+  общие обработчики `server/handlers/*` + точки входа `api/*.js`; **пофункциональный рендер**
+  (`/api/generate` планирует пак и создаёт строки пинов со статусом `processing`; `/api/render-pin`
+  рисует ОДИН пин — влезает в лимит времени). Фронт `Analysis.jsx` оркеструет рендер по пину с прогрессом.
+  `vercel.json` (SPA-rewrite). Шрифты — из `assets/fonts` (закоммичены) или `/tmp`. `pins.status` теперь
+  допускает `processing` (миграция `pins_status_allow_processing`). Проверено локально end-to-end + ZIP.
+- **Осталось (внешние действия, требуют аккаунта пользователя):**
+  1. `git push` нового коммита в `github.com/dtebelev/micro_SaaS` (в среде агента пуш блокируется — делает пользователь или с его разрешения).
+  2. Vercel → Add New → Project → Import `dtebelev/micro_SaaS` (Framework: Vite, авто). Включает авто-деплой при каждом push.
+  3. Env Variables в Vercel (значения из `.env`): `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `SUPABASE_URL`,
+     `SUPABASE_ANON_KEY`, `USE_REAL_AI=1`, `OPENROUTER_API_KEY`, `OPENROUTER_MODEL`, `FLUX_PROVIDER`, `FLUX_API_KEY`,
+     `FLUX_MODEL`, `CARDS_COUNT`. (service_role не обязателен.)
+  4. Deploy → получить URL. `VERCEL_TOKEN` для CLI-деплоя лежит в `.env` (если среда позволит `npx vercel`).
 - Storage/БД — Supabase уже облачные, менять не нужно.
 
 ## Определение готовности Этапа 2
