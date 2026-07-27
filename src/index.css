@@ -1,0 +1,169 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/*
+  ============================================================
+  Design system: NaturoPin — "Evidence-based Softness"
+  Источник токенов: design/Design.md + прототип Stitch.
+  Тёплый кремово-лаймовый фон, глубокий лесной primary,
+  лаймовый акцент только на CTA. Playfair Display + Inter.
+  Мягкие большие скругления, органичные тени, glassmorphism.
+  ============================================================
+*/
+
+:root {
+  --radius: 1rem;
+
+  /* Surfaces */
+  --background: #fafcd5;
+  --foreground: #1a1d06;
+  --card: #ffffff;
+  --card-foreground: #1a1d06;
+  --popover: #ffffff;
+  --popover-foreground: #1a1d06;
+
+  /* Brand */
+  --primary: #0e401c;              /* deep forest */
+  --primary-foreground: #ffffff;
+  --secondary: #586400;            /* olive */
+  --secondary-foreground: #ffffff;
+
+  --muted: #eef1ca;                /* surface-container */
+  --muted-foreground: #414940;     /* on-surface-variant */
+  --accent: #e0e4c9;               /* light sage */
+  --accent-foreground: #0e401c;
+
+  --destructive: #ba1a1a;
+  --destructive-foreground: #ffffff;
+
+  --border: #d3d8b5;               /* muted-border */
+  --input: #d3d8b5;
+  --ring: #285831;                 /* deep-forest focus */
+
+  /* Named brand tokens (used directly in JSX via bg-*, text-*) */
+  --lime-accent: #c4d84a;
+  --hover-lime: #b6cb38;
+  --deep-forest: #285831;
+  --primary-container: #285831;
+  --on-primary-container: #98cd9b;
+  --light-sage: #e0e4c9;
+  --secondary-sage: #a9b9ab;
+  --muted-border: #d3d8b5;
+  --surface: #fafcd5;
+  --surface-container-low: #f4f7d0;
+  --surface-container: #eef1ca;
+  --surface-container-high: #e9ebc5;
+  --surface-variant: #e3e5bf;
+  --on-surface: #1a1d06;
+  --on-surface-variant: #414940;
+  --outline: #717970;
+  --outline-variant: #c1c9be;
+  --off-white: #fdfdfd;
+
+  /* Sidebar — deep forest panel */
+  --sidebar: #285831;
+  --sidebar-foreground: #98cd9b;
+  --sidebar-primary: #c4d84a;
+  --sidebar-primary-foreground: #0e401c;
+  --sidebar-accent: rgba(255, 255, 255, 0.08);
+  --sidebar-accent-foreground: #c4d84a;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #c4d84a;
+}
+
+@theme inline {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: 'Playfair Display', ui-serif, Georgia, serif;
+  --font-display: 'Playfair Display', ui-serif, Georgia, serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Brand color utilities */
+  --color-lime-accent: var(--lime-accent);
+  --color-hover-lime: var(--hover-lime);
+  --color-deep-forest: var(--deep-forest);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary-container: var(--on-primary-container);
+  --color-light-sage: var(--light-sage);
+  --color-secondary-sage: var(--secondary-sage);
+  --color-muted-border: var(--muted-border);
+  --color-surface: var(--surface);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-variant: var(--surface-variant);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-off-white: var(--off-white);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Rounded scale — soft & large */
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+    outline-color: color-mix(in srgb, var(--ring) 50%, transparent);
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+@layer utilities {
+  .shadow-card {
+    box-shadow: 0 12px 30px rgba(37, 40, 15, 0.08);
+  }
+  .shadow-cta {
+    box-shadow: 0 12px 26px rgba(196, 216, 74, 0.28);
+  }
+  .glass {
+    backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(37, 40, 15, 0.08);
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}

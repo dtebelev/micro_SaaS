@@ -60,3 +60,10 @@ Desktop.ini
 
 # ==== Локальные настройки Claude Code ====
 .claude/settings.local.json
+
+# ==== Результаты тестовой генерации (не коммитим) ====
+output/
+
+# Инструменты агента (не часть продукта)
+.claude/
+.mcp.json
