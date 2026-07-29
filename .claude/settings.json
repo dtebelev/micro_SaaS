@@ -1,0 +1,49 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Write",
+      "Bash(git add *)",
+      "Bash(git commit*)",
+      "Bash(git push*)",
+      "Bash(npm test*)",
+      "Bash(npm run test:*)",
+      "Bash(npm run lint*)",
+      "Bash(npx eslint*)",
+      "mcp__supabase__apply_migration",
+      "mcp__supabase__deploy_edge_function"
+    ],
+    "ask": [
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git push *--force*)",
+      "Bash(git reset --hard*)",
+      "Bash(sudo *)",
+      "Edit(server/pipeline/**)",
+      "Write(server/pipeline/**)",
+      "Edit(server/handlers/**)",
+      "Write(server/handlers/**)",
+      "Edit(server/index.js)",
+      "Write(server/index.js)",
+      "Edit(src/screens/Source.jsx)",
+      "Edit(src/screens/Analysis.jsx)",
+      "Edit(src/screens/Workbench.jsx)",
+      "Edit(src/screens/Finish.jsx)",
+      "Edit(src/lib/api.js)",
+      "Edit(src/components/layout/AppLayout.jsx)",
+      "mcp__supabase__reset_branch",
+      "mcp__supabase__delete_branch"
+    ]
+  },
+  "autoMode": {
+    "soft_deny": [
+      "$defaults",
+      "SQL или Supabase-миграции, содержащие DROP TABLE, DROP SCHEMA, TRUNCATE или DELETE без условия WHERE — на любой таблице",
+      "Сброс, пересоздание базы или ветки Supabase (reset_branch и аналогичные операции)",
+      "Откат (rollback) или замена уже применённой чужой миграции вместо добавления новой",
+      "Вывод в чат, логирование, коммит в git или любая пересылка значений секретов/API-ключей/токенов (.env, SUPABASE_SERVICE_ROLE_KEY, OPENROUTER_API_KEY, FLUX_API_KEY и подобные)",
+      "Любое платное/тарифицируемое обращение к внешнему API (FLUX, OpenRouter и т.п.) сверх одного тестового вызова без явного подтверждения пользователя"
+    ]
+  }
+}

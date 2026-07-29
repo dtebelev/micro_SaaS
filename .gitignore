@@ -65,5 +65,4 @@ Desktop.ini
 output/
 
 # Инструменты агента (не часть продукта)
-.claude/
 .mcp.json
