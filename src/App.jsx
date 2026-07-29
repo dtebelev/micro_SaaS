@@ -8,6 +8,9 @@ import SourceScreen from '@/screens/Source'
 import AnalysisScreen from '@/screens/Analysis'
 import WorkbenchScreen from '@/screens/Workbench'
 import FinishScreen from '@/screens/Finish'
+import AdminScreen from '@/screens/Admin'
+
+const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL
 
 function Splash() {
   return (
@@ -50,6 +53,9 @@ export default function App() {
             <Route path="/analysis/:projectId" element={<AnalysisScreen />} />
             <Route path="/workbench/:projectId" element={<WorkbenchScreen />} />
             <Route path="/finish/:projectId" element={<FinishScreen />} />
+            {ADMIN_EMAIL && session.user.email === ADMIN_EMAIL && (
+              <Route path="/admin" element={<AdminScreen />} />
+            )}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>

@@ -27,7 +27,9 @@ async function postJSON(path, body) {
     data = { error: text }
   }
   if (!res.ok) {
-    throw new Error(data?.error || `Ошибка сервера (${res.status})`)
+    const err = new Error(data?.error || `Ошибка сервера (${res.status})`)
+    err.status = res.status
+    throw err
   }
   return data
 }
@@ -45,6 +47,11 @@ export function renderPin(pinId) {
 /** Перегенерировать один пин (с необязательной короткой правкой). */
 export function regeneratePin(pinId, note) {
   return postJSON('/api/regenerate', { pin_id: pinId, note: note || '' })
+}
+
+/** Поправить только заголовок/хук карточки — старый фон, без нового вызова FLUX. */
+export function regeneratePinText(pinId, { title, hook }) {
+  return postJSON('/api/regenerate', { pin_id: pinId, mode: 'text', title, hook })
 }
 
 /** Проект по id (RLS отдаст только свой). */
@@ -78,6 +85,52 @@ export async function hidePin(pinId) {
     .update({ status: 'скрыт' })
     .eq('id', pinId)
   if (error) throw error
+}
+
+/** Мой доступ: план, остаток бесплатных генераций (null = безлимит), статус подписки. */
+export async function getAccess() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (!user) return null
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('plan, credits_remaining, subscription_status, subscription_current_period_end')
+    .eq('id', user.id)
+    .single()
+  if (error) throw error
+  return data
+}
+
+/** Активировать купон (безлимит или N генераций) — атомарно, через функцию в БД. */
+export async function redeemCoupon(code) {
+  const { data, error } = await supabase.rpc('redeem_coupon', { p_code: code.trim() })
+  if (error) throw error
+  if (!data?.ok) throw new Error(data?.error || 'Не удалось активировать купон')
+  return data
+}
+
+/** Подтвердить только что оформленную PayPal-подписку (после onApprove кнопки). */
+export function confirmPaypalSubscription(subscriptionId) {
+  return postJSON('/api/paypal-subscribe', { subscription_id: subscriptionId })
+}
+
+/** Мой email (для проверки видимости пункта меню «Купоны» — сама защита на сервере). */
+export async function getMyEmail() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  return user?.email || null
+}
+
+/** [admin] Создать новый купон. Доступ проверяется на сервере по ADMIN_EMAIL. */
+export function adminCreateCoupon({ code, kind, usesGranted, note }) {
+  return postJSON('/api/admin-create-coupon', {
+    code,
+    kind,
+    uses_granted: kind === 'uses' ? Number(usesGranted) : null,
+    note: note || '',
+  })
 }
 
 /** Подписанная ссылка на PNG в приватном бакете (RLS: только своё). */

@@ -11,6 +11,9 @@ import generate from './handlers/generate.js'
 import renderPin from './handlers/render-pin.js'
 import regenerate from './handlers/regenerate.js'
 import health from './handlers/health.js'
+import paypalSubscribe from './handlers/paypal-subscribe.js'
+import paypalWebhook from './handlers/paypal-webhook.js'
+import adminCreateCoupon from './handlers/admin-create-coupon.js'
 
 const PORT = Number(process.env.API_PORT || 8787)
 
@@ -26,6 +29,9 @@ app.get('/api/health', health)
 app.post('/api/generate', generate)
 app.post('/api/render-pin', renderPin)
 app.post('/api/regenerate', regenerate)
+app.post('/api/paypal-subscribe', paypalSubscribe)
+app.post('/api/paypal-webhook', paypalWebhook)
+app.post('/api/admin-create-coupon', adminCreateCoupon)
 
 app.listen(PORT, () => {
   console.log(`NaturoPin API → http://localhost:${PORT}  (USE_REAL_AI=${process.env.USE_REAL_AI || '0'})`)

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Outlet, useNavigate, NavLink, useLocation } from 'react-router-dom'
 import {
   Leaf,
@@ -10,9 +10,31 @@ import {
   Menu,
   X,
   Check,
+  Ticket,
 } from 'lucide-react'
 import { supabase } from '@/lib/supabaseClient'
+import { getAccess } from '@/lib/api'
 import { Button } from '@/components/ui/button'
+
+const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL
+
+function accessLabel(access) {
+  if (!access) return ''
+  const periodEnd = access.subscription_current_period_end
+    ? new Date(access.subscription_current_period_end)
+    : null
+  const subscriptionCoversNow = periodEnd && periodEnd > new Date()
+
+  if (subscriptionCoversNow) {
+    const dateStr = periodEnd.toLocaleDateString('ru-RU')
+    if (access.subscription_status === 'canceled') return `Подписка отменена — доступ до ${dateStr}`
+    if (access.subscription_status === 'past_due') return `Проблема с оплатой — доступ до ${dateStr}`
+    return 'Подписка активна'
+  }
+  if (access.credits_remaining === null) return 'Купон: безлимит'
+  if (access.credits_remaining > 0) return `Бесплатно: ${access.credits_remaining}`
+  return 'Бесплатные генерации закончились'
+}
 
 const steps = [
   { label: 'Источник', icon: FilePlus2 },
@@ -29,7 +51,7 @@ function currentStep(pathname) {
   return 0
 }
 
-function SidebarContent({ email, onNew, onClose, current }) {
+function SidebarContent({ email, access, onNew, onClose, current }) {
   return (
     <div className="flex h-full flex-col py-8 text-on-primary-container">
       <div className="px-6 mb-10 flex items-start justify-between">
@@ -90,6 +112,19 @@ function SidebarContent({ email, onNew, onClose, current }) {
         </Button>
         <div className="border-t border-white/10 pt-4">
           <p className="truncate text-xs text-on-primary-container/60">{email}</p>
+          {access && (
+            <p className="mt-1 text-xs font-bold text-lime-accent">{accessLabel(access)}</p>
+          )}
+          {ADMIN_EMAIL && email === ADMIN_EMAIL && (
+            <NavLink
+              to="/admin"
+              onClick={onClose}
+              className="mt-2 flex items-center gap-2 text-sm text-on-primary-container/70 transition-colors hover:text-lime-accent"
+            >
+              <Ticket className="size-4" />
+              Купоны
+            </NavLink>
+          )}
           <button
             onClick={() => supabase.auth.signOut()}
             className="mt-2 flex items-center gap-2 text-sm text-on-primary-container/70 transition-colors hover:text-lime-accent"
@@ -108,7 +143,12 @@ export default function AppLayout({ session }) {
   const location = useLocation()
   const current = currentStep(location.pathname)
   const [drawer, setDrawer] = useState(false)
+  const [access, setAccess] = useState(null)
   const email = session?.user?.email || ''
+
+  useEffect(() => {
+    getAccess().then(setAccess).catch(() => {})
+  }, [location.pathname])
 
   const goNew = () => {
     setDrawer(false)
@@ -119,7 +159,7 @@ export default function AppLayout({ session }) {
     <div className="min-h-screen bg-surface">
       {/* Desktop sidebar */}
       <aside className="fixed left-0 top-0 z-40 hidden h-screen w-64 bg-primary-container shadow-md md:block">
-        <SidebarContent email={email} onNew={goNew} current={current} />
+        <SidebarContent email={email} access={access} onNew={goNew} current={current} />
       </aside>
 
       {/* Mobile top bar */}
@@ -141,7 +181,7 @@ export default function AppLayout({ session }) {
             onClick={() => setDrawer(false)}
           />
           <div className="absolute left-0 top-0 h-full w-72 bg-primary-container shadow-xl">
-            <SidebarContent email={email} onNew={goNew} onClose={() => setDrawer(false)} current={current} />
+            <SidebarContent email={email} access={access} onNew={goNew} onClose={() => setDrawer(false)} current={current} />
           </div>
         </div>
       )}

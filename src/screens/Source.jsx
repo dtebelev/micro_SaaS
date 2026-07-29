@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Sparkles, Link2, FileText, Loader2 } from 'lucide-react'
-import { generatePack } from '@/lib/api'
+import { Sparkles, Link2, FileText, Loader2, Ticket, CreditCard } from 'lucide-react'
+import { generatePack, redeemCoupon } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
+import PayPalSubscribeButton from '@/components/PayPalSubscribeButton'
 
 const MIN_CHARS = 80
 const isUrl = (s) => /^https?:\/\/[^\s]+\.[^\s]+$/i.test(String(s || '').trim())
@@ -14,11 +15,18 @@ export default function SourceScreen() {
   const [text, setText] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
+  const [paywall, setPaywall] = useState(false)
+  const [couponOpen, setCouponOpen] = useState(false)
+  const [couponCode, setCouponCode] = useState('')
+  const [couponBusy, setCouponBusy] = useState(false)
+  const [couponMsg, setCouponMsg] = useState('')
+  const [subMsg, setSubMsg] = useState('')
 
   const clearErr = () => error && setError('')
 
   async function submit() {
     setError('')
+    setPaywall(false)
     const link = url.trim()
     const body = link || text.trim()
 
@@ -42,7 +50,26 @@ export default function SourceScreen() {
       navigate(`/analysis/${project_id}`)
     } catch (err) {
       setError(err.message || 'Не удалось запустить обработку. Попробуй ещё раз.')
+      if (err.status === 402) {
+        setPaywall(true)
+        setCouponOpen(true)
+      }
       setBusy(false)
+    }
+  }
+
+  async function activateCoupon() {
+    setCouponBusy(true)
+    setCouponMsg('')
+    try {
+      await redeemCoupon(couponCode)
+      setCouponMsg('Купон активирован! Теперь можно продолжить — нажми «Выделить смыслы» ещё раз.')
+      setCouponCode('')
+      setPaywall(false)
+    } catch (e) {
+      setCouponMsg(e.message || 'Не удалось активировать купон.')
+    } finally {
+      setCouponBusy(false)
     }
   }
 
@@ -116,7 +143,12 @@ export default function SourceScreen() {
         </div>
       </div>
 
-      {error && <p className="mt-4 text-sm font-medium text-destructive">{error}</p>}
+      {error && (
+        <p className="mt-4 text-sm font-medium text-destructive">
+          {error}
+          {paywall && ' Есть купон активации? Введи его ниже.'}
+        </p>
+      )}
 
       <div className="mt-6 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
         <Button size="lg" onClick={submit} disabled={busy}>
@@ -127,6 +159,56 @@ export default function SourceScreen() {
           Сохраним твою терминологию и экспертный тон.
         </span>
       </div>
+
+      <div className="mt-4">
+        {!couponOpen ? (
+          <button
+            onClick={() => setCouponOpen(true)}
+            className="flex items-center gap-1.5 text-sm text-on-surface-variant underline decoration-dotted underline-offset-4 hover:text-primary"
+          >
+            <Ticket className="size-4" />
+            Есть купон активации?
+          </button>
+        ) : (
+          <div className="max-w-md rounded-xl border border-on-surface/5 bg-white p-4 shadow-card">
+            <p className="mb-2 flex items-center gap-1.5 text-sm font-bold text-primary">
+              <Ticket className="size-4" />
+              Купон активации
+            </p>
+            <div className="flex gap-2">
+              <input
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value)}
+                placeholder="Код купона"
+                className="w-full rounded-lg border border-muted-border bg-white px-3 py-2 text-sm outline-none focus:border-transparent focus:ring-2 focus:ring-deep-forest"
+              />
+              <Button size="sm" onClick={activateCoupon} disabled={couponBusy || !couponCode.trim()}>
+                {couponBusy ? <Loader2 className="size-4 animate-spin" /> : 'Применить'}
+              </Button>
+            </div>
+            {couponMsg && (
+              <p className="mt-2 text-sm font-medium text-on-surface-variant">{couponMsg}</p>
+            )}
+          </div>
+        )}
+      </div>
+
+      {paywall && (
+        <div className="mt-4 max-w-md rounded-xl border border-on-surface/5 bg-white p-4 shadow-card">
+          <p className="mb-2 flex items-center gap-1.5 text-sm font-bold text-primary">
+            <CreditCard className="size-4" />
+            Или оформи подписку — $15/мес
+          </p>
+          <PayPalSubscribeButton
+            onActivated={() => {
+              setSubMsg('Подписка активирована! Нажми «Выделить смыслы» ещё раз.')
+              setPaywall(false)
+            }}
+            onError={(msg) => setSubMsg(msg)}
+          />
+          {subMsg && <p className="mt-2 text-sm font-medium text-on-surface-variant">{subMsg}</p>}
+        </div>
+      )}
     </div>
   )
 }
