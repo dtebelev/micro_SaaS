@@ -17,6 +17,9 @@ import {
   newPinId,
   getPinForUser,
   updatePinImage,
+  uploadPng,
+  downloadBg,
+  updatePinText,
 } from './storage.js'
 
 const CARDS_COUNT = Number(process.env.CARDS_COUNT || 6)
@@ -74,4 +77,22 @@ export async function renderPinById(db, userId, pinId, { note } = {}) {
   })
   await updatePinImage(db, pinId, imagePath)
   return { imagePath }
+}
+
+/** Поправить только заголовок/хук: старый фон из Storage + новый Satori-рендер (без FLUX). */
+export async function renderPinTextById(db, userId, pinId, { title, hook } = {}) {
+  const pin = await getPinForUser(db, pinId, userId)
+  if (!pin.image_path) {
+    const e = new Error('У карточки ещё нет фона — сначала нарисуй её целиком.')
+    e.status = 400
+    throw e
+  }
+  const bgPath = pin.image_path.replace(/\.png$/, '_bg.png')
+  const bgPng = await downloadBg(db, bgPath)
+  const newTitle = title != null ? title : pin.title
+  const newHook = hook != null ? hook : pin.hook
+  const finalPng = await renderCard({ title: newTitle, hook: newHook }, bgPng)
+  await uploadPng(db, pin.image_path, finalPng)
+  await updatePinText(db, pinId, { title: newTitle, hook: newHook })
+  return { imagePath: pin.image_path }
 }

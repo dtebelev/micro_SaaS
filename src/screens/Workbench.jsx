@@ -7,8 +7,9 @@ import {
   Loader2,
   Package,
   AlertTriangle,
+  Pencil,
 } from 'lucide-react'
-import { getPins, hidePin, regeneratePin, signedUrl } from '@/lib/api'
+import { getPins, hidePin, regeneratePin, regeneratePinText, signedUrl } from '@/lib/api'
 import { Button } from '@/components/ui/button'
 
 function PinCard({ pin, onHide, onRegenerated }) {
@@ -17,6 +18,10 @@ function PinCard({ pin, onHide, onRegenerated }) {
   const [note, setNote] = useState('')
   const [busy, setBusy] = useState(false)
   const [imgErr, setImgErr] = useState(false)
+  const [textEdit, setTextEdit] = useState(false)
+  const [titleDraft, setTitleDraft] = useState(pin.title || '')
+  const [hookDraft, setHookDraft] = useState(pin.hook || '')
+  const [savingText, setSavingText] = useState(false)
 
   const loadUrl = useCallback(async () => {
     setImgErr(false)
@@ -38,10 +43,32 @@ function PinCard({ pin, onHide, onRegenerated }) {
       setOpen(false)
       setNote('')
       await onRegenerated()
+      await loadUrl() // тот же путь файла — форсим новую подписанную ссылку, чтобы сбить кэш картинки
     } catch (e) {
       alert(e.message || 'Не удалось перегенерировать')
     } finally {
       setBusy(false)
+    }
+  }
+
+  function startTextEdit() {
+    setTitleDraft(pin.title || '')
+    setHookDraft(pin.hook || '')
+    setOpen(false)
+    setTextEdit(true)
+  }
+
+  async function saveText() {
+    setSavingText(true)
+    try {
+      await regeneratePinText(pin.id, { title: titleDraft, hook: hookDraft })
+      setTextEdit(false)
+      await onRegenerated()
+      await loadUrl()
+    } catch (e) {
+      alert(e.message || 'Не удалось сохранить текст')
+    } finally {
+      setSavingText(false)
     }
   }
 
@@ -67,10 +94,22 @@ function PinCard({ pin, onHide, onRegenerated }) {
             size="sm"
             variant="secondary"
             className="flex-1 bg-white/90"
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => {
+              setTextEdit(false)
+              setOpen((v) => !v)
+            }}
           >
             <RefreshCw className="size-4" />
             Перегенерировать
+          </Button>
+          <Button
+            size="icon-sm"
+            variant="secondary"
+            className="bg-white/90"
+            title="Править текст"
+            onClick={startTextEdit}
+          >
+            <Pencil className="size-4" />
           </Button>
           <Button
             size="icon-sm"
@@ -92,6 +131,33 @@ function PinCard({ pin, onHide, onRegenerated }) {
           <p className="mt-1 line-clamp-2 text-sm text-on-surface-variant">
             {pin.description}
           </p>
+        )}
+
+        {textEdit && (
+          <div className="mt-3 space-y-2 rounded-lg bg-surface-container-low p-3">
+            <input
+              value={titleDraft}
+              onChange={(e) => setTitleDraft(e.target.value)}
+              placeholder="Заголовок"
+              className="w-full rounded-lg border border-muted-border bg-white px-3 py-2 text-sm font-bold outline-none focus:border-transparent focus:ring-2 focus:ring-deep-forest"
+            />
+            <textarea
+              value={hookDraft}
+              onChange={(e) => setHookDraft(e.target.value)}
+              placeholder="Хук (короткий рассказ)"
+              rows={3}
+              className="w-full resize-none rounded-lg border border-muted-border bg-white px-3 py-2 text-sm outline-none focus:border-transparent focus:ring-2 focus:ring-deep-forest"
+            />
+            <div className="flex gap-2">
+              <Button size="sm" onClick={saveText} disabled={savingText} className="flex-1">
+                {savingText ? <Loader2 className="size-4 animate-spin" /> : <Pencil className="size-4" />}
+                {savingText ? 'Сохраняю…' : 'Сохранить текст'}
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => setTextEdit(false)}>
+                Отмена
+              </Button>
+            </div>
+          </div>
         )}
 
         {open && (
