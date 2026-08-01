@@ -16,7 +16,9 @@ jobs:
           SUPABASE_URL: https://lhalwyegtrlhimpnwpah.supabase.co
           SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxoYWx3eWVndHJsaGltcG53cGFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4NDQyNTcsImV4cCI6MjEwMDQyMDI1N30.JXR35xkwFlPcxelwhPm6xLUqnkscJzqRY8GyyBSAFAA
         run: |
-          curl -sS -o /dev/null -w "HTTP %{http_code}\n" \
-            "$SUPABASE_URL/rest/v1/" \
+          # /rest/v1/ (корневая OpenAPI-схема) теперь принимает только service_role,
+          # поэтому стучимся в реальную таблицу — анонимному ключу этого достаточно для "активности".
+          curl -sS -f -o /dev/null -w "HTTP %{http_code}\n" \
+            "$SUPABASE_URL/rest/v1/coupons?select=*&limit=1" \
             -H "apikey: $SUPABASE_ANON_KEY" \
             -H "Authorization: Bearer $SUPABASE_ANON_KEY"
