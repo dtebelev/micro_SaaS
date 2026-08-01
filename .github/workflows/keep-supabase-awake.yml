@@ -1,0 +1,22 @@
+name: Keep Supabase awake
+
+on:
+  schedule:
+    # Каждые ~2 дня в 06:00 UTC. Supabase free-tier засыпает после 7 дней без обращений к API.
+    - cron: '0 6 */2 * *'
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST API
+        env:
+          # Публичный (anon/publishable) ключ Supabase — предназначен для клиентского кода, безопасен в репозитории.
+          SUPABASE_URL: https://lhalwyegtrlhimpnwpah.supabase.co
+          SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxoYWx3eWVndHJsaGltcG53cGFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4NDQyNTcsImV4cCI6MjEwMDQyMDI1N30.JXR35xkwFlPcxelwhPm6xLUqnkscJzqRY8GyyBSAFAA
+        run: |
+          curl -sS -o /dev/null -w "HTTP %{http_code}\n" \
+            "$SUPABASE_URL/rest/v1/" \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            -H "Authorization: Bearer $SUPABASE_ANON_KEY"
