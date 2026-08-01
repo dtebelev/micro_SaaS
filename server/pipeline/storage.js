@@ -2,9 +2,12 @@
 //  Запись в Supabase: Storage + БД.
 //  Клиент `db` передаётся из index.js. По умолчанию сервер пишет
 //  ОТ ИМЕНИ пользователя (его JWT + RLS) — service_role не нужен.
+//  Исключение — consumeCredit(): пишет защищённую триггером колонку
+//  profiles.credits_remaining, поэтому явно использует supabaseAdmin.
 //  Путь файла: {user_id}/{project_id}/{pin_id}.png (+ _bg.png)
 // ============================================================
 import { randomUUID } from 'node:crypto'
+import { supabaseAdmin } from '../supabaseAdmin.js'
 
 const BUCKET = 'pins'
 
@@ -108,9 +111,14 @@ export function hasAccess(access) {
   return (access.credits_remaining ?? 0) > 0
 }
 
-/** Списать одну бесплатную генерацию (вызывать только если !hasAccess-безлимит). */
-export async function consumeCredit(db, userId, creditsRemaining) {
-  const { error } = await db
+/**
+ * Списать одну бесплатную генерацию (вызывать только если !hasAccess-безлимит).
+ * Пишет через service_role намеренно: credits_remaining — защищённая триггером
+ * колонка (protect_profile_billing_columns_trigger), обычный клиент от имени
+ * пользователя эту запись не проведёт — триггер её молча откатит.
+ */
+export async function consumeCredit(userId, creditsRemaining) {
+  const { error } = await supabaseAdmin
     .from('profiles')
     .update({ credits_remaining: creditsRemaining - 1 })
     .eq('id', userId)

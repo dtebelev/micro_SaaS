@@ -26,7 +26,7 @@ export default async function handler(req, res) {
 
     const { projectId, pins } = await planProject(db, user.id, src)
     if (!subscriptionCoversNow(access) && access.credits_remaining !== null) {
-      await consumeCredit(db, user.id, access.credits_remaining)
+      await consumeCredit(user.id, access.credits_remaining)
     }
     res.status(200).json({ project_id: projectId, pins })
   } catch (e) {

@@ -6,20 +6,19 @@ import { createClient } from '@supabase/supabase-js'
 
 const URL = process.env.SUPABASE_URL
 const ANON = process.env.SUPABASE_ANON_KEY
-const SERVICE_ROLE = process.env.SUPABASE_SERVICE_ROLE_KEY
 
 export const authClient = createClient(URL, ANON)
 
 /**
- * Клиент БД для запросов пользователя.
- * По умолчанию — от ИМЕНИ пользователя (его JWT + RLS): service_role не нужен.
+ * Клиент БД для запросов пользователя — ВСЕГДА от его ИМЕНИ (anon-key + его JWT),
+ * чтобы реально работал RLS. service_role здесь намеренно не используется:
+ * иначе RLS-политики (которые ограничивают доступ к чужим projects/pins) просто
+ * обходятся, и единственной защитой остаются ручные проверки в коде хендлеров.
+ * Для операций, которым по design нужен обход RLS (запись защищённых колонок
+ * profiles, вебхук без пользовательской сессии, admin) — использовать
+ * `supabaseAdmin` из `server/supabaseAdmin.js` явно и точечно.
  */
 export function dbForUser(token) {
-  if (SERVICE_ROLE) {
-    return createClient(URL, SERVICE_ROLE, {
-      auth: { autoRefreshToken: false, persistSession: false },
-    })
-  }
   return createClient(URL, ANON, {
     auth: { autoRefreshToken: false, persistSession: false },
     global: { headers: { Authorization: `Bearer ${token}` } },
