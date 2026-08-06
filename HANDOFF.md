@@ -72,14 +72,23 @@ npm run dev        # web:5173 + api:8787 (concurrently)
 service_role. Взять: Supabase Dashboard → Settings → API → `service_role`.
 **✅ Заполнен пользователем 2026-07-29.**
 
-**Оплата/купоны — статус ключей на 2026-07-29** (см. подробный чек-лист в разделе
-«ЭТАП 2 → Оплата» ниже, там же — что делать в первую очередь):
-- ✅ **Заполнены** (пользователь вставил сам, Sandbox): `PAYPAL_ENV=sandbox`, `PAYPAL_CLIENT_ID`,
-  `PAYPAL_CLIENT_SECRET`, `VITE_PAYPAL_CLIENT_ID`.
-- ⬜ **Пока пусто**: `PAYPAL_PLAN_ID`, `VITE_PAYPAL_PLAN_ID` (нужно создать Product + Billing Plan
-  $15/мес в PayPal Dashboard), `PAYPAL_WEBHOOK_ID` (осознанно отложено — вебхук привязывается к
-  реальному адресу, а его пока нет, см. ниже).
+**Оплата/купоны — статус ключей на 2026-08-05: ВСЕ ЗАПОЛНЕНЫ.**
+- ✅ `PAYPAL_ENV=sandbox`, `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`, `VITE_PAYPAL_CLIENT_ID` — заполнены пользователем.
+- ✅ `PAYPAL_PLAN_ID` / `VITE_PAYPAL_PLAN_ID` — созданы напрямую через PayPal REST API (Catalog
+  Products → Billing Plans, $15/мес, USD), не через кликанье по дашборду (интерфейс PayPal
+  успел смениться и заготовленный путь по кликам не совпадал с реальным экраном). Product
+  `PROD-1DC815724U662191Y`, Plan `P-7TU564480T816010BNJZ6B7Q`.
+- ✅ `PAYPAL_WEBHOOK_ID` — создан тем же способом (API), указывает на
+  `https://microsaasnaturopin10.vercel.app/api/paypal-webhook`, подписан на все события, которые
+  реально обрабатывает `paypal-webhook.js` (ACTIVATED/RE-ACTIVATED/CANCELLED/EXPIRED/SUSPENDED/
+  PAYMENT.FAILED/PAYMENT.SALE.DENIED/PAYMENT.SALE.COMPLETED). Webhook `4E536620AX709672U`.
+  Значения не секретные (как и Plan ID) — можно смело смотреть в `.env` и в Vercel.
+- Все три значения также добавлены в переменные окружения Vercel (через API, без клика по
+  дашборду) и прод передеплоен — актуальны и локально, и на публичном сайте.
 - ✅ `ADMIN_EMAIL`/`VITE_ADMIN_EMAIL` заполнены — `dtebelev@hotmail.com` (не секрет, просто адрес).
+- **Осталось проверить руками:** живой клик по кнопке PayPal на публичном сайте с тестовым
+  Sandbox-покупателем (developer.paypal.com/dashboard → Sandbox → Accounts) — сама кнопка теперь
+  должна рендериться по-настоящему (не заглушка «скоро будет доступна»), т.к. `PLAN_ID` больше не пустой.
 
 ## Карта кода
 - Фронт: `src/screens/{Auth,Source,Analysis,Workbench,Finish,Admin}.jsx`, лейаут
@@ -170,25 +179,16 @@ RLS включён, но клиенту не открыт вообще — чи�
 - **Где в приложении кнопка PayPal:** экран «Источник» (`Source.jsx`), карточка сразу под блоком
   купона («Или оформи подписку — $15/мес»). Рендерится компонентом `PayPalSubscribeButton.jsx`,
   показывается автоматически, когда `paywall=true` (сервер вернул 402 — бесплатные генерации
-  кончились). Пока `PAYPAL_PLAN_ID`/`VITE_PAYPAL_PLAN_ID` пустые — компонент вместо кнопки тихо
-  показывает текст-заглушку «Оплата подпиской скоро будет доступна» (это специально, не баг).
-  Скриншот расположения снят 2026-07-29 (не в репозитории, был показан пользователю в чате) —
-  блок в том же белом карточном стиле, что и купон, прямо под ним.
+  кончились). Теперь `PAYPAL_PLAN_ID`/`VITE_PAYPAL_PLAN_ID` заполнены — компонент должен
+  рендерить настоящую кнопку PayPal, а не заглушку (живой клик пользователем ещё не проверялся).
+  Блок в том же белом карточном стиле, что и купон, прямо под ним.
 
-- **Статус ключей на 2026-07-29** (кто что уже вставил в `.env` — подробности в разделе
-  «Переменные окружения» выше):
-  - ✅ `SUPABASE_SERVICE_ROLE_KEY` — заполнен.
-  - ✅ `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`, `VITE_PAYPAL_CLIENT_ID` — заполнены
-    (Sandbox-приложение в developer.paypal.com уже создано пользователем).
-  - ⬜ `PAYPAL_PLAN_ID` / `VITE_PAYPAL_PLAN_ID` — **следующий шаг**, когда вернётся пользователь:
-    developer.paypal.com/dashboard → Sandbox → Product & Plans → создать Product + Billing Plan
-    (Monthly, $15.00 USD, без setup fee) → скопировать Plan ID (начинается на `P-...`) → вписать
-    в обе переменные (значение одно и то же).
-  - ⬜ `PAYPAL_WEBHOOK_ID` — **осознанно отложено до деплоя на Vercel** (см. пункт 4 ниже): вебхук
-    указывает на реальный `https://ТВОЙ-ДОМЕН/api/paypal-webhook`, а домена пока нет. Без него
-    кнопка подписки и подтверждение всё равно работают — не отработает только автопродление/отмена
-    по вебхуку. Когда появится Vercel-домен: developer.paypal.com/dashboard → Sandbox app →
-    Webhooks → Add Webhook → тот адрес, события «All events» → получить `PAYPAL_WEBHOOK_ID`.
+- **Статус ключей на 2026-08-05: всё заполнено** (подробности — в разделе «Переменные окружения»
+  выше). `PAYPAL_PLAN_ID`/`VITE_PAYPAL_PLAN_ID`/`PAYPAL_WEBHOOK_ID` заведены не кликами по
+  дашборду (интерфейс PayPal успел смениться, старый маршрут по кликам не совпал с реальным
+  экраном), а напрямую через PayPal REST API (Catalog Products → Billing Plans → Webhooks) —
+  тем же Sandbox-ключом `PAYPAL_CLIENT_ID`/`PAYPAL_CLIENT_SECRET`, который пользователь уже
+  вставил раньше. Значения перенесены и в Vercel, прод передеплоен.
   - После вставки `PAYPAL_PLAN_ID` — перезапустить dev-сервер (`.env` читается только при старте),
     затем можно проверить кнопку живьём: тестовый Sandbox-покупатель — в
     developer.paypal.com/dashboard → Sandbox → Accounts (аккаунт с пометкой Personal).
