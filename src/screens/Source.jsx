@@ -8,6 +8,11 @@ import PayPalSubscribeButton from '@/components/PayPalSubscribeButton'
 
 const MIN_CHARS = 80
 const isUrl = (s) => /^https?:\/\/[^\s]+\.[^\s]+$/i.test(String(s || '').trim())
+// Единственный переключатель для возврата к продаже: поставь VITE_MONETIZATION_ENABLED=true
+// в .env (и в Vercel → Settings → Environment Variables) и передеплой.
+// Пока false/не задано — сайт не просит оплату у посетителей (некоммерческое личное
+// использование по правилам Vercel Hobby), доступ только по купону.
+const MONETIZATION_ENABLED = import.meta.env.VITE_MONETIZATION_ENABLED === 'true'
 
 export default function SourceScreen() {
   const navigate = useNavigate()
@@ -193,7 +198,7 @@ export default function SourceScreen() {
         )}
       </div>
 
-      {paywall && (
+      {paywall && MONETIZATION_ENABLED && (
         <div className="mt-4 max-w-md rounded-xl border border-on-surface/5 bg-white p-4 shadow-card">
           <p className="mb-2 flex items-center gap-1.5 text-sm font-bold text-primary">
             <CreditCard className="size-4" />
