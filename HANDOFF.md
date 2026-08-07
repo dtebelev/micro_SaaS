@@ -86,6 +86,10 @@ service_role. Взять: Supabase Dashboard → Settings → API → `service_r
 - Все три значения также добавлены в переменные окружения Vercel (через API, без клика по
   дашборду) и прод передеплоен — актуальны и локально, и на публичном сайте.
 - ✅ `ADMIN_EMAIL`/`VITE_ADMIN_EMAIL` заполнены — `dtebelev@hotmail.com` (не секрет, просто адрес).
+  Этот email теперь ещё и обходит платный гейт целиком (см. «Безлимит для владельца» ниже).
+- ✅ `TELEGRAM_BOT_TOKEN`/`TELEGRAM_CHAT_ID` заполнены (2026-08-07) — уведомление о новой заявке
+  с `/landing` приходит владельцу в Telegram. Бот создан через `@BotFather`, chat_id — свой личный
+  Telegram id. Пусто = уведомления просто не шлются, ничего не ломается (см. `.env.example`).
 - **Осталось проверить руками:** живой клик по кнопке PayPal на публичном сайте с тестовым
   Sandbox-покупателем (developer.paypal.com/dashboard → Sandbox → Accounts) — сама кнопка теперь
   должна рендериться по-настоящему (не заглушка «скоро будет доступна»), т.к. `PLAN_ID` больше не пустой.
@@ -93,11 +97,17 @@ service_role. Взять: Supabase Dashboard → Settings → API → `service_r
 ## Карта кода
 - Фронт: `src/screens/{Auth,Source,Analysis,Workbench,Finish,Admin}.jsx`, лейаут
   `src/components/layout/AppLayout.jsx` (в меню активный шаг подсвечен lime, пройденные — с ✓;
-  бейдж доступа внизу; пункт «Купоны» виден только владельцу), API-слой `src/lib/api.js`,
-  бренд-токены `src/index.css`, `src/components/PayPalSubscribeButton.jsx` (кнопка подписки).
+  бейдж доступа внизу — у `ADMIN_EMAIL` показывает «Безлимит (владелец)»; пункт «Купоны» виден
+  только владельцу), API-слой `src/lib/api.js`, бренд-токены `src/index.css`,
+  `src/components/PayPalSubscribeButton.jsx` (кнопка подписки, сейчас скрыта флагом — см. ниже).
+  `Admin.jsx` теперь три секции: выдача купонов, «Купоны-слоты» (список + кнопка «Отозвать»),
+  «Заявки с лендинга».
 - Бэк: `server/index.js` (роуты `/api/generate`, `/api/regenerate`, `/api/paypal-subscribe`,
   `/api/paypal-webhook`, `/api/admin-create-coupon`), те же обработчики как serverless — `api/*.js`
-  (тонкие ре-экспорты `server/handlers/*`). `server/pipeline/`:
+  (тонкие ре-экспорты `server/handlers/*`, кроме новых ниже — они не re-export, а самостоятельные
+  файлы: `api/lead.js`, `api/admin-leads.js`, `api/admin-coupons.js`, `api/admin-revoke-coupon.js`).
+  `server/lib/telegram.js` — `notifyTelegram(text)`, no-op если `TELEGRAM_BOT_TOKEN`/
+  `TELEGRAM_CHAT_ID` не заданы. `server/pipeline/`:
   - `llm.js` — методист (SEO-заголовок по `spec/ПРОМПТ-1-ЗАГОЛОВОК.md` + hook/scene/description/hashtags). Экспортит `SAVE_CTA='Читать далее'`, `HANDLE='@naturonata'`.
   - `flux.js` — FLUX-2/flash (fal.ai, `fal-ai/flux-2/flash`), войлочный фон **без текста**.
   - `render.js` — Satori→PNG, story-пин, финал в **2×** (чёткий текст). Логотип: `assets/brand/logo.png`.
@@ -123,13 +133,23 @@ service_role. Взять: Supabase Dashboard → Settings → API → `service_r
 `service_role` (сервер). Без этого пользователь мог бы через консоль браузера сам выставить себе
 `plan='subscription'` — дыра была в исходной RLS-политике `profiles_update_own` (без ограничения по колонкам).
 
-**`coupons`**: `code` (PK), `kind` (`unlimited`/`uses`), `uses_granted`, `redeemed_by`, `redeemed_at`.
-RLS включён, но клиенту не открыт вообще — читать/писать можно только через функции:
-`redeem_coupon(code)` (security definer, `authenticated`) — активация. Создание новых купонов — только
-через `/api/admin-create-coupon` (проверка `ADMIN_EMAIL` на сервере, пишет через service_role) или
-экран `/admin`. Тестовые коды уже в БД: `FRIEND-UNLIMITED`, `TRY15`, `TRY10`.
+**`coupons`**: `code` (PK), `kind` (`unlimited`/`uses`), `uses_granted`, `redeemed_by`, `redeemed_at`,
+`revoked_at` (добавлено 2026-08-07). RLS включён, но клиенту не открыт вообще — читать/писать можно
+только через функции: `redeem_coupon(code)` (security definer, `authenticated`) — активация.
+**Важно: код одноразовый на ОДНОГО человека** — `redeem_coupon` берёт строку `where redeemed_by is
+null`, после первой активации код закрыт для всех остальных навсегда (даже если `kind='unlimited'` —
+это про безлимит генераций у ЭТОГО человека, не про число людей, кто может ввести код). Для нескольких
+людей — заводить отдельный код на каждого.
+Создание новых купонов — через `/api/admin-create-coupon` (проверка `ADMIN_EMAIL`, пишет через
+service_role) или экран `/admin`. Тестовые коды в БД: `FRIEND-UNLIMITED-1` … `FRIEND-UNLIMITED-7`
+(7 слотов для друзей, см. раздел «Купоны-слоты и отзыв доступа» ниже), `TRY15`, `TRY10`.
 
 Триггеры: `handle_new_user`, `auto_confirm_email` (авто-подтверждение почты — **для локального демо; на проде заменить настройкой Auth/magic-link**), `protect_profile_billing_columns_trigger` (см. выше).
+
+**`leads`** (миграция `20260807013309_landing_leads.sql`): заявки с публичной страницы `/landing`
+(`name`, `contact`, `about`, `source`, `created_at`). RLS включён, клиенту недоступна вообще (как
+`coupons`) — пишет только `api/lead.js` через `service_role`, читает только `/admin` через
+`api/admin-leads.js` (проверка `ADMIN_EMAIL`).
 
 ## Готчи (не наступать повторно)
 - **FLUX впечатывает текст**: в фон лезут вотермарки/английские надписи на предметах. Держим:
@@ -234,8 +254,9 @@ visitors of the site» прямо указано как коммерческое
 **Что сделано:**
 - Кнопка PayPal на `Source.jsx` скрыта за флагом `VITE_MONETIZATION_ENABLED` (по умолчанию
   `false`/не задан). Код PayPal/подписки не удалён — просто не рендерится.
-- Доступ выдаётся только по купону (`redeemCoupon`) — для Наташи уже есть безлимитный купон
-  `FRIEND-UNLIMITED` в БД.
+- Доступ выдаётся только по купону (`redeemCoupon`) — для Наташи и до 6 друзей есть 7 безлимитных
+  слотов `FRIEND-UNLIMITED-1`…`-7` в БД (см. «Купоны-слоты и отзыв доступа» ниже). Плюс владелец
+  (`ADMIN_EMAIL`) вообще без купона — безлимит встроен в код.
 - Флаг `VITE_MONETIZATION_ENABLED=false` записан в `.env`, `.env.example` и в переменные окружения
   Vercel (production/preview/development).
 
@@ -248,6 +269,73 @@ visitors of the site» прямо указано как коммерческое
    `vercel deploy --prod --token=...`).
 4. Кнопка «Оформи подписку — $15/мес» на экране «Источник» появится сама — код не менялся, только
    флаг.
+
+## Публичный лендинг `/landing` (2026-08-06/07)
+
+Продающая страница отдельно от самого приложения — собрана навыками `landing-builder` +
+`landing-designer` из проекта. Не React-компонент, а самостоятельный HTML.
+
+- **Живой файл — `public/landing/index.html`** (не `landing/index.html`!). Vite копирует
+  `public/` в сборку как есть — только оттуда файл попадает в `dist/` и на Vercel. В `landing/`
+  остались только текстовые артефакты сборки для истории/пересборки: `landing-brief.md` (бриф по
+  Rule of One, одобрен резидентом), `landing-skeleton.md` (9 канонических блоков + карусель),
+  `landing-copy.txt` (копия без разметки).
+- **Маршрут:** `vercel.json` — явные rewrite для `/landing` и `/landing/(.*)` ПЕРЕД общим SPA
+  катч-оллом `/(.*) -> /index.html` (Vercel применяет первое совпадение по порядку массива).
+  Публичный адрес: `https://microsaasnaturopin10.vercel.app/landing`.
+- **Картинки:** `public/landing/assets/app-workbench.png` (реальный кроп «Верстака», без email
+  тестового аккаунта — обрезка через `@resvg/resvg-js`, не CSS-маскировка) + 5 слайдов из
+  NotebookLM-презентации резидента (`slide-{hook,design,anatomy,why-pinterest,cta}.jpg`) — водяной
+  знак «Gemini Notebook» убран клон-штампом через Pillow, «NaturoPin»-вордмарк не задет.
+  Осознанно НЕ включены 3 слайда презентации, заявляющие функции, которых в продукте нет
+  (авто-фильтр медицинской безопасности, авто-адаптация под 3 аудитории, встроенная аналитика —
+  подробности в `landing/landing-skeleton.md`).
+- **Форма заявки → `/api/lead.js`** (POST, без авторизации, honeypot-поле от ботов) → пишет в
+  таблицу `leads` через service_role → шлёт `notifyTelegram()`. Ключевая деталь: `fetch` шлёт JSON
+  (не `FormData`/multipart — Vercel по умолчанию не парсит multipart-тело).
+- ⚠️ **PWA service worker перехватывал `/landing`**: у любого, кто уже открывал `/` раньше,
+  в браузере стоит SW самого приложения; `navigateFallback` (workbox) подставлял `/index.html`
+  на ЛЮБую непойманную навигацию, включая `/landing`. Починено в `vite.config.js`:
+  `globIgnores: ['landing/**']` + `navigateFallbackDenylist: [/^\/landing(\/|$)/]`. Если заведёшь
+  ещё одну самостоятельную статическую страницу вне SPA — не забудь так же исключить её здесь.
+- Скрипт для локальной визуальной проверки: `node scripts/_shot-landing.mjs` (десктоп+375px,
+  проверка переполнения, JS-ошибок, применения токенов `design/Design.md`).
+
+## Заявки с лендинга + Telegram-уведомления (2026-08-07)
+
+- `/admin` → секция «Заявки с лендинга»: `api/admin-leads.js` (GET, `ADMIN_EMAIL`-гейт,
+  service_role) отдаёт до 200 последних заявок.
+- `server/lib/telegram.js: notifyTelegram(text)` — шлёт сообщение через Bot API. Вызывается из
+  `api/lead.js` **синхронно, до ответа** (не «после» — serverless-функция может «заморозиться»
+  сразу за response, необождённый fetch рискует не успеть уйти). Ошибка Telegram не валит саму
+  заявку (try/catch, только `console.error`).
+- Настройка (нужны 2 минуты резидента, сам я это сделать не могу — требуется его Telegram):
+  `@BotFather` → `/newbot` → токен; написать боту любое сообщение (иначе он не может писать первым);
+  `https://api.telegram.org/bot<токен>/getUpdates` → найти `chat.id`. Подробности в `.env.example`.
+
+## Купоны-слоты и отзыв доступа (2026-08-07)
+
+Раньше `FRIEND-UNLIMITED` был рассчитан на ОДНОГО человека (см. пояснение в разделе «Данные» выше)
+— для нескольких друзей просто не работал бы. Заменено на 7 кодов `FRIEND-UNLIMITED-1`…`-7`.
+Отзыва доступа не было вообще — добавлен:
+- `api/admin-revoke-coupon.js` (POST `{code}`, `ADMIN_EMAIL`-гейт) — находит `redeemed_by` по коду,
+  сбрасывает `profiles.plan='trial'`, `credits_remaining=0` (доступ пропадает сразу — `getAccess()`
+  в pipeline читает БД без кеша), помечает `coupons.revoked_at` (историю не стирает: `redeemed_by`
+  не трогается — видно, кто им пользовался, даже после отзыва).
+- `api/admin-coupons.js` (GET) — список всех купонов со статусом (свободен/активен/отозван) и email
+  того, кто активировал (`supabaseAdmin.auth.admin.getUserById`).
+- UI — `/admin` → секция «Купоны-слоты», кнопка «Отозвать» на каждом активном коде.
+- Проверено сквозным прогоном на одноразовом тестовом пользователе (создан и удалён через
+  `auth.admin`) — реальные 7 слотов не задеты.
+
+## Безлимит для владельца (2026-08-07)
+
+`server/handlers/generate.js` (труба Части 1 — правка была явно подтверждена резидентом): если
+`user.email` совпадает с `ADMIN_EMAIL`, проверка `hasAccess()` и списание кредита (`consumeCredit`)
+пропускаются целиком — купон вводить не нужно, счётчик генераций владельца не касается вообще.
+Бейдж в `AppLayout.jsx` для этого email показывает «Безлимит (владелец)» вместо счётчика кредитов.
+Остальных пользователей (Наташа, 7 друзей) правка не касается — код только добавляет обход, старая
+ветка логики не менялась.
 
 ## Определение готовности Этапа 2
 Каждая фича — сквозной живой путь на реальных данных, проверенный в приложении (смоук-скрипт или браузерный прогон),
