@@ -112,8 +112,10 @@ function SidebarContent({ email, access, onNew, onClose, current }) {
         </Button>
         <div className="border-t border-white/10 pt-4">
           <p className="truncate text-xs text-on-primary-container/60">{email}</p>
-          {access && (
-            <p className="mt-1 text-xs font-bold text-lime-accent">{accessLabel(access)}</p>
+          {ADMIN_EMAIL && email === ADMIN_EMAIL ? (
+            <p className="mt-1 text-xs font-bold text-lime-accent">Безлимит (владелец)</p>
+          ) : (
+            access && <p className="mt-1 text-xs font-bold text-lime-accent">{accessLabel(access)}</p>
           )}
           {ADMIN_EMAIL && email === ADMIN_EMAIL && (
             <NavLink

@@ -17,15 +17,20 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Слишком короткий текст статьи. Вставь больше текста или дай ссылку.' })
     }
 
+    // Владелец (ADMIN_EMAIL) — безлимит без купона и без расхода кредитов.
+    const isAdmin =
+      String(user.email || '').trim().toLowerCase() ===
+      String(process.env.ADMIN_EMAIL || '').trim().toLowerCase()
+
     const access = await getAccess(db, user.id)
-    if (!hasAccess(access)) {
+    if (!isAdmin && !hasAccess(access)) {
       const e = new Error('Бесплатные генерации закончились. Введи купон активации, чтобы продолжить.')
       e.status = 402
       throw e
     }
 
     const { projectId, pins } = await planProject(db, user.id, src)
-    if (!subscriptionCoversNow(access) && access.credits_remaining !== null) {
+    if (!isAdmin && !subscriptionCoversNow(access) && access.credits_remaining !== null) {
       await consumeCredit(user.id, access.credits_remaining)
     }
     res.status(200).json({ project_id: projectId, pins })

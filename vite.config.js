@@ -36,7 +36,15 @@ export default defineConfig(({ mode }) => {
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+          // /landing — отдельная статическая страница (не часть SPA-приложения),
+          // живёт в public/landing/ и публикуется на Vercel через свой rewrite
+          // (см. vercel.json). Без этих двух исключений service worker приложения
+          // перехватывает переход на /landing и подменяет его на само приложение
+          // (navigateFallback подставляет /index.html на любой "непойманный" путь) —
+          // это и было причиной бага "landing ведёт в приложение".
+          globIgnores: ['landing/**'],
           navigateFallback: '/index.html',
+          navigateFallbackDenylist: [/^\/landing(\/|$)/],
           runtimeCaching: [
             {
               urlPattern: ({ url }) =>
