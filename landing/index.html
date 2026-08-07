@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NaturoPin — статья в пак экспертных Pinterest-карточек за минуты</title>
+<meta name="description" content="Вставь статью — методист соберёт 8–15 образовательных Pinterest-карточек: чек-листы, памятки, алгоритмы. Без Canva, без AI-мусора, кириллица без ошибок.">
+<meta property="og:title" content="NaturoPin — статья в пак экспертных Pinterest-карточек за минуты">
+<meta property="og:description" content="Без Canva и без AI-мусора. Ты правишь каждую карточку перед скачиванием.">
+<meta property="og:type" content="website">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+/* Токены — строго из design/Design.md. Ничего не изобретаем, только переносим. */
+tailwind.config = { theme: { extend: {
+  colors: {
+    bg:        '#fafcd5',  /* surface / background        */
+    card:      '#ffffff',  /* surface-container-lowest    */
+    tint:      '#f4f7d0',  /* surface-container-low       */
+    tint2:     '#eef1ca',  /* surface-container           */
+    forest:    '#0e401c',  /* primary — Deep Forest       */
+    forest2:   '#285831',  /* primary-container           */
+    lime:      '#d6ea5a',  /* secondary-container — акцент, только интерактив */
+    olive:     '#5c6900',  /* on-secondary-container      */
+    ink:       '#1a1d06',  /* on-surface — текст          */
+    muted:     '#414940',  /* on-surface-variant          */
+    line:      '#c1c9be',  /* outline-variant             */
+    outline:   '#717970',  /* outline                     */
+    invsurf:   '#2f3218',  /* inverse-surface             */
+    invink:    '#f1f4cd'   /* inverse-on-surface          */
+  },
+  fontFamily: {
+    head: ['"Playfair Display"','Georgia','serif'],
+    body: ['Inter','system-ui','sans-serif']
+  },
+  borderRadius: {         /* rounded из Design.md */
+    'ds-sm': '0.5rem', 'ds': '1rem', 'ds-md': '1.5rem', 'ds-lg': '2rem', 'ds-xl': '3rem'
+  },
+  maxWidth: { container: '1120px' },   /* spacing.container-max */
+  boxShadow: {
+    /* «Soft Elevation»: мягкие тени с оливковым подтоном, как требует Design.md */
+    soft:  '0 10px 34px -14px rgba(26,29,6,.18), 0 2px 8px -4px rgba(26,29,6,.06)',
+    lift:  '0 18px 48px -16px rgba(26,29,6,.26), 0 4px 12px -6px rgba(26,29,6,.08)',
+    cta:   '0 12px 30px -10px rgba(88,100,0,.45)'
+  }
+}}}
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { -webkit-font-smoothing: antialiased; }
+  /* появление секций при скролле — класс навешивается только из JS, без JS всё видно */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.on { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal.on { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+  details > summary { list-style: none; }
+  details > summary::-webkit-details-marker { display: none; }
+</style>
+</head>
+
+<body class="bg-bg text-ink font-body">
+
+<!-- ======================= ХЕДЕР (glassmorphism, Design.md → Elevation) ======================= -->
+<header class="sticky top-0 z-50 border-b border-line/60 bg-bg/75 backdrop-blur-[16px]">
+  <div class="mx-auto max-w-container px-5 sm:px-6">
+    <div class="flex h-16 items-center justify-between gap-4">
+      <a href="#top" class="flex items-center gap-2.5">
+        <span class="flex size-9 items-center justify-center rounded-full bg-forest text-lime">
+          <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+        </span>
+        <span class="font-head text-lg font-bold text-forest">NaturoPin</span>
+      </a>
+      <nav class="hidden items-center gap-7 text-sm text-muted md:flex">
+        <a href="#how" class="transition hover:text-forest">Как работает</a>
+        <a href="#benefits" class="transition hover:text-forest">Что даёт</a>
+        <a href="#reviews" class="transition hover:text-forest">Отзывы</a>
+        <a href="#faq" class="transition hover:text-forest">Вопросы</a>
+      </nav>
+      <a href="#apply" class="rounded-full bg-lime px-5 py-2.5 text-sm font-semibold text-ink shadow-cta transition hover:-translate-y-0.5 hover:shadow-lift">
+        Оставить заявку
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ======================= HERO ======================= -->
+<section class="relative overflow-hidden">
+  <!-- фоновое свечение акцентом (низкая прозрачность) -->
+  <div class="pointer-events-none absolute -top-56 left-1/2 h-[560px] w-[900px] max-w-[140vw] -translate-x-1/2 rounded-full"
+       style="background: radial-gradient(closest-side, rgba(214,234,90,.55), rgba(214,234,90,0));"></div>
+  <div class="pointer-events-none absolute -bottom-40 -left-40 h-[420px] w-[420px] rounded-full"
+       style="background: radial-gradient(closest-side, rgba(40,88,49,.10), transparent);"></div>
+
+  <div class="relative mx-auto max-w-container px-5 pb-16 pt-14 sm:px-6 sm:pt-20 md:pb-24 md:pt-24">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="inline-flex items-center gap-2 rounded-full border border-line bg-card/70 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.08em] text-muted">
+        <span class="size-1.5 rounded-full bg-lime"></span>
+        Закрытая бета · осталось 7 мест
+      </span>
+
+      <h1 class="mt-6 font-head text-[2.25rem] font-bold leading-[1.1] tracking-[-0.02em] text-forest sm:text-5xl md:text-[3.4rem]">
+        Твоя статья → пак экспертных Pinterest-карточек за&nbsp;минуты — без Canva и без <span class="text-olive">AI-мусора</span>
+      </h1>
+
+      <p class="mx-auto mt-6 max-w-2xl text-base leading-[1.7] text-muted sm:text-lg">
+        Вставь ссылку на статью или сам текст — методист прочитает материал, выделит главное и соберёт
+        8–15 карточек: чек-листы, памятки, алгоритмы. Кириллица всегда без ошибок, голос и терминология —
+        твои. Ты проверяешь и правишь каждую карточку перед скачиванием.
+      </p>
+
+      <div class="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+        <a href="#apply" class="rounded-full bg-lime px-7 py-4 text-center font-semibold text-ink shadow-cta transition hover:-translate-y-0.5 hover:shadow-lift">
+          Оставить заявку на доступ
+        </a>
+        <a href="#how" class="rounded-full border border-forest/25 px-7 py-4 text-center font-medium text-forest transition hover:-translate-y-0.5 hover:border-forest/50 hover:bg-card">
+          Посмотреть, как это работает
+        </a>
+      </div>
+    </div>
+
+    <!-- МОКАП ПРОДУКТА — реальный экран приложения -->
+    <div class="mx-auto mt-14 max-w-5xl">
+      <div class="overflow-hidden rounded-ds-xl border border-line bg-card shadow-lift">
+        <div class="flex items-center gap-1.5 border-b border-line bg-tint px-5 py-3.5">
+          <span class="size-3 rounded-full bg-[#e6a3a0]"></span>
+          <span class="size-3 rounded-full bg-[#e3d08a]"></span>
+          <span class="size-3 rounded-full bg-[#a8c99b]"></span>
+          <span class="ml-3 hidden text-xs text-outline sm:inline">Верстак — 6 карточек готово</span>
+        </div>
+        <img src="assets/app-workbench.png"
+             alt="Экран «Верстак» в NaturoPin: сетка готовых образовательных карточек, собранных из одной статьи"
+             width="1280" height="820" loading="lazy" class="block w-full">
+      </div>
+      <p class="mt-3 text-center text-xs text-outline">Реальный экран приложения — не мокап</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= TRUST BAR ======================= -->
+<div class="border-y border-line bg-tint">
+  <div class="mx-auto flex max-w-container flex-wrap justify-center gap-x-10 gap-y-3 px-5 py-6 text-center text-sm text-muted sm:px-6">
+    <span class="inline-flex items-center gap-2">
+      <svg viewBox="0 0 24 24" class="size-4 text-forest" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      8–15 карточек с одной статьи
+    </span>
+    <span class="inline-flex items-center gap-2">
+      <svg viewBox="0 0 24 24" class="size-4 text-forest" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      Кириллица без ошибок
+    </span>
+    <span class="inline-flex items-center gap-2">
+      <svg viewBox="0 0 24 24" class="size-4 text-forest" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      Без автопостинга — публикуешь сама
+    </span>
+    <span class="inline-flex items-center gap-2">
+      <svg viewBox="0 0 24 24" class="size-4 text-forest" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      4 эксперта в раннем тесте
+    </span>
+  </div>
+</div>
+
+<!-- ======================= ПРОБЛЕМА ======================= -->
+<section class="bg-card py-16 md:py-24">
+  <div class="mx-auto max-w-container px-5 sm:px-6">
+    <div class="mx-auto max-w-3xl">
+      <h2 class="text-center font-head text-[2rem] font-bold leading-[1.15] tracking-[-0.01em] text-forest md:text-4xl">Знакомо?</h2>
+
+      <div class="mt-10 space-y-5">
+        <div class="flex gap-4 rounded-ds-lg border border-line bg-bg p-6 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift">
+          <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-tint2 text-forest">
+            <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </span>
+          <p class="text-[15px] leading-[1.7] text-muted sm:text-base">
+            Ты пишешь статью вечером, когда сын наконец уснул — а потом ещё час убиваешь на визуал в Canva,
+            потому что «без картинки в Pinterest никто не увидит». Каждая карточка — это торг между
+            «сделать красиво» и «наконец лечь спать».
+            <strong class="font-semibold text-ink">8–10 часов в неделю</strong> уходит не на консультации
+            и не на отдых — на подбор шрифтов и рамочек.
+          </p>
+        </div>
+
+        <div class="flex gap-4 rounded-ds-lg border border-line bg-bg p-6 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift">
+          <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-tint2 text-forest">
+            <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+          </span>
+          <p class="text-[15px] leading-[1.7] text-muted sm:text-base">
+            Ты уже пробовала AI-генераторы — и разочаровалась: шаблонные картинки, которые не передают
+            глубину твоей темы, кривая кириллица, «AI-мусор», под которым стыдно подписаться своим именем.
+          </p>
+        </div>
+
+        <div class="flex gap-4 rounded-ds-lg border border-line bg-bg p-6 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift">
+          <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-tint2 text-forest">
+            <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/><path d="M9 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4"/></svg>
+          </span>
+          <p class="text-[15px] leading-[1.7] text-muted sm:text-base">
+            Пока дизайн тянется вручную, контент выходит нерегулярно — а каждая неделя без стабильного
+            потока пинов это упущенные заявки на консультации, которые сейчас получает кто-то другой
+            в твоей нише.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= РЕШЕНИЕ ======================= -->
+<section class="py-16 md:py-24">
+  <div class="mx-auto max-w-container px-5 sm:px-6">
+    <div class="mx-auto max-w-3xl text-center">
+      <span class="inline-flex items-center gap-2 rounded-full bg-tint2 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.08em] text-olive">Решение</span>
+      <h2 class="mt-6 font-head text-[2rem] font-bold leading-[1.15] tracking-[-0.01em] text-forest md:text-4xl">
+        NaturoPin — не генератор картинок, а <span class="text-olive">методист</span>, который бережно упаковывает твою экспертизу
+      </h2>
+      <p class="mx-auto mt-6 max-w-2xl text-base leading-[1.7] text-muted sm:text-lg">
+        Вставляешь статью → система выделяет ключевые мысли, чек-листы и алгоритмы → собирает их в
+        сенсорно-чистые образовательные карточки, которые выглядят как твоя работа, а не как AI-шаблон.
+      </p>
+      <p class="mx-auto mt-4 max-w-2xl text-base leading-[1.7] text-muted sm:text-lg">
+        После — ты правишь текст и скачиваешь пак за те же пару минут, которые раньше уходили на поиск
+        идеи для <em class="not-italic font-semibold text-ink">одной</em> картинки в Canva.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= КАК ЭТО РАБОТАЕТ ======================= -->
+<section id="how" class="bg-tint py-16 md:py-24">
+  <div class="mx-auto max-w-container px-5 sm:px-6">
+    <h2 class="text-center font-head text-[2rem] font-bold leading-[1.15] tracking-[-0.01em] text-forest md:text-4xl">
+      Три шага — от статьи до готового пака
+    </h2>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
+      <div class="rounded-ds-xl border border-line bg-card p-8 shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
+        <div class="flex items-center justify-between">
+          <span class="flex size-11 items-center justify-center rounded-full bg-lime/30 text-forest">
+            <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </span>
+          <span class="font-head text-5xl font-bold leading-none text-lime">01</span>
+        </div>
+        <h3 class="mt-6 font-head text-xl font-bold leading-[1.25] text-forest">Вставь статью</h3>
+        <p class="mt-2 text-[15px] leading-[1.7] text-muted">
+          Ссылку или сам текст. Методист сам прочитает и разложит на смыслы — чек-листы, инструкции, советы.
+        </p>
+      </div>
+
+      <div class="rounded-ds-xl border border-line bg-card p-8 shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
+        <div class="flex items-center justify-between">
+          <span class="flex size-11 items-center justify-center rounded-full bg-lime/30 text-forest">
+            <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+          </span>
+          <span class="font-head text-5xl font-bold leading-none text-lime">02</span>
+        </div>
+        <h3 class="mt-6 font-head text-xl font-bold leading-[1.25] text-forest">Проверь и поправь</h3>
+        <p class="mt-2 text-[15px] leading-[1.7] text-muted">
+          На Верстаке видно все карточки: заголовок, хук, картинка. Правишь текст прямо на месте — ничего
+          не уходит без твоего согласия.
+        </p>
+      </div>
+
+      <div class="rounded-ds-xl border border-line bg-card p-8 shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
+        <div class="flex items-center justify-between">
+          <span class="flex size-11 items-center justify-center rounded-full bg-lime/30 text-forest">
+            <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+          </span>
+          <span class="font-head text-5xl font-bold leading-none text-lime">03</span>
+        </div>
+        <h3 class="mt-6 font-head text-xl font-bold leading-[1.25] text-forest">Скачай пак</h3>
+        <p class="mt-2 text-[15px] leading-[1.7] text-muted">
+          ZIP с готовыми PNG и файлом метаданных для Pinterest. Публикуешь сама и когда сама решишь.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ВЫГОДЫ ======================= -->
+<section id="benefits" class="py-16 md:py-24">
+  <div class="mx-auto max-w-container px-5 sm:px-6">
+    <h2 class="text-center font-head text-[2rem] font-bold leading-[1.15] tracking-[-0.01em] text-forest md:text-4xl">
+      Что это меняет в твоей неделе
+    </h2>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div class="rounded-ds-lg border border-line bg-card p-7 shadow-soft transition hover:-translate-y-1 hover:border-lime hover:shadow-lift">
+        <span class="flex size-11 items-center justify-center rounded-full bg-tint2 text-forest">
+          <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        </span>
+        <h3 class="mt-5 font-head text-xl font-bold leading-[1.25] text-forest">Возвращаешь себе вечера</h3>
+        <p class="mt-2 text-[15px] leading-[1.7] text-muted">
+          Пак из 8–15 карточек готов за минуты вместо 8–10 часов в неделю в Canva.
+        </p>
+      </div>
+
+      <div class="rounded-ds-lg border border-line bg-card p-7 shadow-soft transition hover:-translate-y-1 hover:border-lime hover:shadow-lift">
+        <span class="flex size-11 items-center justify-center rounded-full bg-tint2 text-forest">
+          <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </span>
+        <h3 class="mt-5 font-head text-xl font-bold leading-[1.25] text-forest">Не боишься «AI-мусора»</h3>
+        <p class="mt-2 text-[15px] leading-[1.7] text-muted">
+          Войлочный фон без текста, а сам текст кладётся кодом — кириллица без ошибок, дизайн выглядит
+          как работа специалиста, а не трендовый шаблон.
+        </p>
+      </div>
+
+      <div class="rounded-ds-lg border border-line bg-card p-7 shadow-soft transition hover:-translate-y-1 hover:border-lime hover:shadow-lift">
+        <span class="flex size-11 items-center justify-center rounded-full bg-tint2 text-forest">
+          <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </span>
+        <h3 class="mt-5 font-head text-xl font-bold leading-[1.25] text-forest">Сохраняешь свой голос</h3>
+        <p class="mt-2 text-[15px] leading-[1.7] text-muted">
+          Терминология и тон — твои, не шаблонный переписанный текст.
+        </p>
+      </div>
+
+      <div class="rounded-ds-lg border border-line bg-card p-7 shadow-soft transition hover:-translate-y-1 hover:border-lime hover:shadow-lift">
+        <span class="flex size-11 items-center justify-center rounded-full bg-tint2 text-forest">
+          <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
+        </span>
+        <h3 class="mt-5 font-head text-xl font-bold leading-[1.25] text-forest">Держишь полный контроль</h3>
+        <p class="mt-2 text-[15px] leading-[1.7] text-muted">
+          Ничего не публикуется автоматически — правишь и скачиваешь сама, когда готова.
+        </p>
+      </div>
+
+      <div class="rounded-ds-lg border border-line bg-card p-7 shadow-soft transition hover:-translate-y-1 hover:border-lime hover:shadow-lift">
+        <span class="flex size-11 items-center justify-center rounded-full bg-tint2 text-forest">
+          <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        </span>
+        <h3 class="mt-5 font-head text-xl font-bold leading-[1.25] text-forest">Разнообразие форматов</h3>
+        <p class="mt-2 text-[15px] leading-[1.7] text-muted">
+          Чек-листы, памятки, алгоритмы, карточки ошибок и советов — не один и тот же шаблон
+          15 раз подряд.
+        </p>
+      </div>
+
+      <!-- мини-CTA карточка вместо пустой ячейки сетки -->
+      <div class="flex flex-col justify-between rounded-ds-lg border border-forest/20 bg-forest p-7 shadow-soft">
+        <p class="font-head text-xl font-bold leading-[1.3] text-invink">
+          Осталось 7 мест в закрытой бете
+        </p>
+        <a href="#apply" class="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-lime px-6 py-3 font-semibold text-ink shadow-cta transition hover:-translate-y-0.5">
+          Оставить заявку
+          <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= СОЦ-ДОКАЗАТЕЛЬСТВО ======================= -->
+<section id="reviews" class="bg-tint2 py-16 md:py-24">
+  <div class="mx-auto max-w-container px-5 sm:px-6">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="font-head text-[2rem] font-bold leading-[1.15] tracking-[-0.01em] text-forest md:text-4xl">
+        Уже проверено на живых экспертах
+      </h2>
+      <p class="mt-4 text-base leading-[1.7] text-muted">
+        Четыре человека прошли путь от статьи до карточек и оставили честную обратную связь —
+        не «пять из пяти» на камеру, а то, что реально сказали.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2">
+      <figure class="rounded-ds-lg border border-line bg-card p-7 shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
+        <svg viewBox="0 0 24 24" class="size-7 text-lime" fill="currentColor"><path d="M9.5 5C6.5 6.5 5 9 5 12v7h6v-7H8c0-2 .8-3.4 2.5-4.3L9.5 5Zm9 0c-3 1.5-4.5 4-4.5 7v7h6v-7h-3c0-2 .8-3.4 2.5-4.3L18.5 5Z"/></svg>
+        <blockquote class="mt-4 text-lg leading-[1.6] text-ink">
+          «По цветовой палитре приятный интерфейс, Проверка — Одобрить — В черновик»
+        </blockquote>
+        <figcaption class="mt-5 flex items-center gap-3 border-t border-line pt-4">
+          <span class="flex size-10 items-center justify-center rounded-full bg-tint2 font-head text-lg font-bold text-forest">Е</span>
+          <span class="text-sm"><span class="block font-semibold text-ink">Елена Норман</span><span class="text-outline">бета-тестер</span></span>
+        </figcaption>
+      </figure>
+
+      <figure class="rounded-ds-lg border border-line bg-card p-7 shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
+        <svg viewBox="0 0 24 24" class="size-7 text-lime" fill="currentColor"><path d="M9.5 5C6.5 6.5 5 9 5 12v7h6v-7H8c0-2 .8-3.4 2.5-4.3L9.5 5Zm9 0c-3 1.5-4.5 4-4.5 7v7h6v-7h-3c0-2 .8-3.4 2.5-4.3L18.5 5Z"/></svg>
+        <blockquote class="mt-4 text-lg leading-[1.6] text-ink">
+          «Привычный вид, понятная навигация»
+        </blockquote>
+        <figcaption class="mt-5 flex items-center gap-3 border-t border-line pt-4">
+          <span class="flex size-10 items-center justify-center rounded-full bg-tint2 font-head text-lg font-bold text-forest">А</span>
+          <span class="text-sm"><span class="block font-semibold text-ink">Анатолий</span><span class="text-outline">бета-тестер</span></span>
+        </figcaption>
+      </figure>
+
+      <figure class="rounded-ds-lg border border-line bg-card p-7 shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
+        <svg viewBox="0 0 24 24" class="size-7 text-lime" fill="currentColor"><path d="M9.5 5C6.5 6.5 5 9 5 12v7h6v-7H8c0-2 .8-3.4 2.5-4.3L9.5 5Zm9 0c-3 1.5-4.5 4-4.5 7v7h6v-7h-3c0-2 .8-3.4 2.5-4.3L18.5 5Z"/></svg>
+        <blockquote class="mt-4 text-lg leading-[1.6] text-ink">
+          «Дизайн очень симпатичный»
+        </blockquote>
+        <figcaption class="mt-5 flex items-center gap-3 border-t border-line pt-4">
+          <span class="flex size-10 items-center justify-center rounded-full bg-tint2 font-head text-lg font-bold text-forest">А</span>
+          <span class="text-sm"><span class="block font-semibold text-ink">Андрей</span><span class="text-outline">бета-тестер</span></span>
+        </figcaption>
+      </figure>
+
+      <figure class="rounded-ds-lg border border-line bg-card p-7 shadow-soft transition hover:-translate-y-1 hover:shadow-lift">
+        <svg viewBox="0 0 24 24" class="size-7 text-lime" fill="currentColor"><path d="M9.5 5C6.5 6.5 5 9 5 12v7h6v-7H8c0-2 .8-3.4 2.5-4.3L9.5 5Zm9 0c-3 1.5-4.5 4-4.5 7v7h6v-7h-3c0-2 .8-3.4 2.5-4.3L18.5 5Z"/></svg>
+        <blockquote class="mt-4 text-lg leading-[1.6] text-ink">
+          Понравились «варианты картинок»
+        </blockquote>
+        <figcaption class="mt-5 flex items-center gap-3 border-t border-line pt-4">
+          <span class="flex size-10 items-center justify-center rounded-full bg-tint2 font-head text-lg font-bold text-forest">И</span>
+          <span class="text-sm"><span class="block font-semibold text-ink">Ирина</span><span class="text-outline">бета-тестер</span></span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="mx-auto mt-8 max-w-2xl text-center text-sm leading-[1.6] text-outline">
+      Отзывы собраны на раннем прототипе в июле 2026 — до части доработок. Тест показал и шероховатости:
+      их чиним, поэтому мест в бете пока семь, а не сто.
+    </p>
+  </div>
+</section>
+
+<!-- ======================= ОФФЕР / ДОСТУП ======================= -->
+<section id="offer" class="py-16 md:py-24">
+  <div class="mx-auto max-w-container px-5 sm:px-6">
+    <div class="mx-auto max-w-2xl">
+      <div class="relative rounded-ds-xl border border-lime bg-card p-8 shadow-lift ring-1 ring-lime/40 sm:p-10">
+        <span class="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-lime px-4 py-1.5 text-xs font-bold uppercase tracking-[0.08em] text-ink">
+          Закрытая бета · 7 мест
+        </span>
+
+        <h2 class="mt-3 text-center font-head text-[2rem] font-bold leading-[1.15] text-forest md:text-4xl">
+          Что входит, когда ты в деле
+        </h2>
+
+        <ul class="mt-8 space-y-4">
+          <li class="flex gap-3">
+            <svg viewBox="0 0 24 24" class="mt-0.5 size-5 shrink-0 text-olive" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="text-[15px] leading-[1.7] text-muted sm:text-base">Пак из <strong class="font-semibold text-ink">8–15 карточек</strong> с каждой присланной статьи.</span>
+          </li>
+          <li class="flex gap-3">
+            <svg viewBox="0 0 24 24" class="mt-0.5 size-5 shrink-0 text-olive" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="text-[15px] leading-[1.7] text-muted sm:text-base">Правки заголовка и хука прямо на карточке, без новой генерации.</span>
+          </li>
+          <li class="flex gap-3">
+            <svg viewBox="0 0 24 24" class="mt-0.5 size-5 shrink-0 text-olive" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="text-[15px] leading-[1.7] text-muted sm:text-base">Экспорт ZIP: PNG + файл метаданных, готовый для Pinterest.</span>
+          </li>
+          <li class="flex gap-3">
+            <svg viewBox="0 0 24 24" class="mt-0.5 size-5 shrink-0 text-olive" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="text-[15px] leading-[1.7] text-muted sm:text-base">Личный онбординг от автора — помогу пройти первый пак.</span>
+          </li>
+        </ul>
+
+        <div class="mt-8 rounded-ds-lg bg-tint p-6 text-center">
+          <p class="font-head text-2xl font-bold text-forest">Сейчас доступ — бесплатно, по заявке</p>
+          <p class="mt-2 text-[15px] leading-[1.7] text-muted">
+            Ты оставляешь контакт → автор лично выдаёт код доступа.<br class="hidden sm:block">
+            Без автосписаний, без привязки карты.
+          </p>
+        </div>
+
+        <a href="#apply" class="mt-8 block rounded-full bg-lime px-7 py-4 text-center font-semibold text-ink shadow-cta transition hover:-translate-y-0.5 hover:shadow-lift">
+          Оставить заявку на доступ
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= FAQ ======================= -->
+<section id="faq" class="bg-card py-16 md:py-24">
+  <div class="mx-auto max-w-container px-5 sm:px-6">
+    <h2 class="text-center font-head text-[2rem] font-bold leading-[1.15] tracking-[-0.01em] text-forest md:text-4xl">
+      Частые вопросы
+    </h2>
+
+    <div class="mx-auto mt-12 max-w-3xl space-y-3">
+      <details class="group rounded-ds-lg border border-line bg-bg p-6 transition hover:border-lime">
+        <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-ink">
+          Это точно бесплатно?
+          <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-tint2 text-xl leading-none text-forest transition group-open:rotate-45">+</span>
+        </summary>
+        <p class="mt-4 text-[15px] leading-[1.7] text-muted">
+          Да. Сейчас доступ выдаётся вручную по заявке, без оплаты. Если когда-нибудь появится платный
+          тариф — предупредим заранее, никаких скрытых списаний.
+        </p>
+      </details>
+
+      <details class="group rounded-ds-lg border border-line bg-bg p-6 transition hover:border-lime">
+        <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-ink">
+          Сколько времени займёт освоение?
+          <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-tint2 text-xl leading-none text-forest transition group-open:rotate-45">+</span>
+        </summary>
+        <p class="mt-4 text-[15px] leading-[1.7] text-muted">
+          Обычно первый пак получаешь за один присест: вставила статью → пара минут правок на Верстаке →
+          скачала. Обучение не требуется.
+        </p>
+      </details>
+
+      <details class="group rounded-ds-lg border border-line bg-bg p-6 transition hover:border-lime">
+        <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-ink">
+          А если результат не подойдёт под мой стиль?
+          <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-tint2 text-xl leading-none text-forest transition group-open:rotate-45">+</span>
+        </summary>
+        <p class="mt-4 text-[15px] leading-[1.7] text-muted">
+          Ты видишь и правишь каждую карточку перед скачиванием — ничего не публикуется автоматически.
+          Не подошла карточка — просто не скачивай именно её.
+        </p>
+      </details>
+
+      <details class="group rounded-ds-lg border border-line bg-bg p-6 transition hover:border-lime">
+        <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-ink">
+          Чем это лучше того, что я делаю в Canva сейчас?
+          <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-tint2 text-xl leading-none text-forest transition group-open:rotate-45">+</span>
+        </summary>
+        <p class="mt-4 text-[15px] leading-[1.7] text-muted">
+          В Canva макет каждой карточки придумываешь с нуля. Здесь методист уже разложил статью на смыслы
+          и подобрал формат — тебе остаётся поправить текст, а не рисовать заново.
+        </p>
+      </details>
+
+      <details class="group rounded-ds-lg border border-line bg-bg p-6 transition hover:border-lime">
+        <summary class="flex cursor-pointer items-center justify-between gap-4 font-semibold text-ink">
+          Меня не забанят за автоматизацию?
+          <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-tint2 text-xl leading-none text-forest transition group-open:rotate-45">+</span>
+        </summary>
+        <p class="mt-4 text-[15px] leading-[1.7] text-muted">
+          Инструмент не публикует и не постит в Pinterest сам — ты получаешь готовые файлы и выкладываешь
+          их вручную, как обычно. Автопостинга через API здесь нет и не будет — это сознательное решение.
+        </p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ФИНАЛЬНЫЙ CTA + ФОРМА ЗАЯВКИ ======================= -->
+<section id="apply" class="py-16 md:py-24">
+  <div class="mx-auto max-w-container px-5 sm:px-6">
+    <div class="relative overflow-hidden rounded-ds-xl bg-forest p-8 shadow-lift sm:p-12 md:p-16">
+      <div class="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full"
+           style="background: radial-gradient(closest-side, rgba(214,234,90,.22), transparent);"></div>
+      <div class="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full"
+           style="background: radial-gradient(closest-side, rgba(214,234,90,.12), transparent);"></div>
+
+      <div class="relative mx-auto max-w-2xl text-center">
+        <h2 class="font-head text-[2rem] font-bold leading-[1.15] tracking-[-0.01em] text-invink md:text-[2.75rem]">
+          Твоя статья → пак экспертных Pinterest-карточек за минуты — без Canva и без <span class="text-lime">AI-мусора</span>
+        </h2>
+        <p class="mt-5 text-base leading-[1.7] text-invink/75 sm:text-lg">
+          Оставь контакт — пришлю код доступа и помогу собрать первый пак.
+          Осталось <strong class="font-semibold text-lime">7 мест</strong>.
+        </p>
+
+        <!--
+          ⚠️ ФОРМА НЕ ПОДКЛЮЧЕНА К БЭКЕНДУ.
+          Перед публикацией подставь endpoint в data-endpoint ниже:
+          Google Forms / Formspree / собственный /api/lead.
+          Пока endpoint пустой — форма честно говорит, что приём заявок не настроен,
+          и НЕ показывает фальшивое «заявка отправлена».
+        -->
+        <form id="applyForm" data-endpoint="" class="mx-auto mt-9 max-w-md space-y-3 text-left" novalidate>
+          <div>
+            <label for="f-name" class="mb-1.5 block text-sm font-medium text-invink/80">Как тебя зовут</label>
+            <input id="f-name" name="name" type="text" required autocomplete="name"
+                   class="w-full rounded-ds-lg border border-line/40 bg-invink px-5 py-3.5 text-ink outline-none transition placeholder:text-outline focus:border-lime focus:ring-2 focus:ring-lime/40"
+                   placeholder="Наташа">
+          </div>
+          <div>
+            <label for="f-contact" class="mb-1.5 block text-sm font-medium text-invink/80">Куда прислать доступ — почта или Telegram</label>
+            <input id="f-contact" name="contact" type="text" required
+                   class="w-full rounded-ds-lg border border-line/40 bg-invink px-5 py-3.5 text-ink outline-none transition placeholder:text-outline focus:border-lime focus:ring-2 focus:ring-lime/40"
+                   placeholder="you@mail.ru или @username">
+          </div>
+          <div>
+            <label for="f-about" class="mb-1.5 block text-sm font-medium text-invink/80">Про что твои статьи <span class="text-invink/50">(по желанию)</span></label>
+            <textarea id="f-about" name="about" rows="3"
+                      class="w-full resize-none rounded-ds-lg border border-line/40 bg-invink px-5 py-3.5 text-ink outline-none transition placeholder:text-outline focus:border-lime focus:ring-2 focus:ring-lime/40"
+                      placeholder="Нутрициология, РАС, сенсорная интеграция…"></textarea>
+          </div>
+
+          <button type="submit"
+                  class="w-full rounded-full bg-lime px-7 py-4 font-semibold text-ink shadow-cta transition hover:-translate-y-0.5 hover:shadow-lift">
+            Оставить заявку на доступ
+          </button>
+
+          <p id="formMsg" role="status" aria-live="polite" class="hidden rounded-ds-lg bg-invink/10 px-4 py-3 text-center text-sm text-invink"></p>
+          <p class="text-center text-xs leading-[1.6] text-invink/50">
+            Ответ придёт лично от автора. Рассылок и передачи контактов третьим лицам нет.
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ======================= ФУТЕР ======================= -->
+<footer class="border-t border-line bg-tint">
+  <div class="mx-auto max-w-container px-5 py-12 sm:px-6">
+    <div class="flex flex-col items-center gap-6 text-center sm:flex-row sm:justify-between sm:text-left">
+      <div>
+        <div class="flex items-center justify-center gap-2.5 sm:justify-start">
+          <span class="flex size-9 items-center justify-center rounded-full bg-forest text-lime">
+            <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+          </span>
+          <span class="font-head text-lg font-bold text-forest">NaturoPin</span>
+        </div>
+        <p class="mt-3 text-sm leading-[1.6] text-muted">
+          Смыслы для Pinterest · бренд NATURONATA<br>
+          <span class="text-outline">@naturonata</span>
+        </p>
+      </div>
+
+      <div class="text-sm text-muted">
+        <p class="font-medium text-ink">Связаться</p>
+        <p class="mt-2 leading-[1.6]">
+          Единственный способ — <a href="#apply" class="font-medium text-forest underline decoration-lime decoration-2 underline-offset-4 transition hover:text-olive">форма заявки</a>
+        </p>
+      </div>
+    </div>
+
+    <p class="mt-10 border-t border-line pt-6 text-center text-xs text-outline">
+      © 2026 NaturoPin. Продукт в стадии закрытой беты.
+    </p>
+  </div>
+</footer>
+
+<script>
+/* Плавное появление секций. Класс вешаем из JS — без JS страница полностью видима. */
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) return;
+
+  var sections = document.querySelectorAll('main > section');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  sections.forEach(function (el) { el.classList.add('reveal'); io.observe(el); });
+
+  /* Страховка: контент не должен остаться невидимым, если IntersectionObserver
+     не сработал (нестандартный движок, скриншот «beyond viewport», баг браузера).
+     Если через 3 с не проявилась НИ ОДНА секция — снимаем анимацию совсем. */
+  setTimeout(function () {
+    if (!document.querySelector('main > section.reveal.on')) {
+      sections.forEach(function (el) { el.classList.add('on'); });
+    }
+  }, 3000);
+})();
+
+/* Форма заявки. Пока endpoint не задан — говорим правду, а не рисуем фальшивый успех. */
+(function () {
+  var form = document.getElementById('applyForm');
+  var msg  = document.getElementById('formMsg');
+  if (!form) return;
+
+  function show(text) { msg.textContent = text; msg.classList.remove('hidden'); }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var endpoint = form.dataset.endpoint;
+
+    /* именно form.elements.*: form.name — это свойство самой формы, не поле ввода */
+    var name    = form.elements.namedItem('name');
+    var contact = form.elements.namedItem('contact');
+    if (!name.value.trim() || !contact.value.trim()) {
+      show('Заполни, пожалуйста, имя и контакт.');
+      return;
+    }
+    if (!endpoint) {
+      show('Приём заявок ещё не подключён — страница в подготовке. Endpoint формы задаётся в data-endpoint.');
+      return;
+    }
+    fetch(endpoint, { method: 'POST', body: new FormData(form) })
+      .then(function (r) {
+        if (!r.ok) throw new Error('bad status');
+        form.reset();
+        show('Заявка отправлена. Автор напишет тебе лично.');
+      })
+      .catch(function () { show('Не получилось отправить. Попробуй ещё раз чуть позже.'); });
+  });
+})();
+</script>
+
+</body>
+</html>
