@@ -2,8 +2,10 @@
 // Публичный роут без авторизации: просто складывает контакт в таблицу leads
 // через service_role (RLS не даёт anon-доступа напрямую к таблице).
 import { supabaseAdmin } from '../server/supabaseAdmin.js'
+import { notifyTelegram } from '../server/lib/telegram.js'
 
 const MAX_LEN = 2000
+const escapeHtml = (s) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]))
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' })
@@ -26,6 +28,20 @@ export default async function handler(req, res) {
       .from('leads')
       .insert({ name, contact, about: about || null, source: 'landing' })
     if (error) throw error
+
+    // Уведомление — best-effort, ждём здесь (не после ответа): serverless-функция
+    // может «заморозиться» сразу после отправки ответа, необождённый fetch к Telegram
+    // рискует просто не успеть уйти. Ошибка Telegram не должна ломать саму заявку.
+    try {
+      await notifyTelegram(
+        `🌿 <b>Новая заявка с лендинга NaturoPin</b>\n` +
+        `Имя: ${escapeHtml(name)}\n` +
+        `Контакт: ${escapeHtml(contact)}` +
+        (about ? `\nО статьях: ${escapeHtml(about)}` : '')
+      )
+    } catch (e) {
+      console.error('notifyTelegram failed:', e.message)
+    }
 
     res.status(200).json({ ok: true })
   } catch (e) {

@@ -1,7 +1,100 @@
-import { useState } from 'react'
-import { Ticket, Loader2 } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Ticket, Loader2, Inbox, RefreshCw } from 'lucide-react'
 import { adminCreateCoupon } from '@/lib/api'
+import { supabase } from '@/lib/supabaseClient'
 import { Button } from '@/components/ui/button'
+
+async function fetchLeads() {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+  const token = session?.access_token
+  const res = await fetch('/api/admin-leads', {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  })
+  const data = await res.json()
+  if (!res.ok) throw new Error(data?.error || `Ошибка сервера (${res.status})`)
+  return data.leads
+}
+
+function LeadsSection() {
+  const [leads, setLeads] = useState(null)
+  const [busy, setBusy] = useState(false)
+  const [err, setErr] = useState('')
+
+  async function load() {
+    setBusy(true)
+    setErr('')
+    try {
+      setLeads(await fetchLeads())
+    } catch (e) {
+      setErr(e.message || 'Не удалось загрузить заявки.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  useEffect(() => {
+    load()
+  }, [])
+
+  return (
+    <section className="mt-10">
+      <div className="mb-4 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="flex size-11 items-center justify-center rounded-full bg-lime-accent text-deep-forest">
+            <Inbox className="size-5" />
+          </div>
+          <div>
+            <h3 className="font-display text-xl font-bold text-primary">Заявки с лендинга</h3>
+            <p className="text-sm text-on-surface-variant">
+              {leads ? `Всего: ${leads.length}` : 'Загрузка…'}
+            </p>
+          </div>
+        </div>
+        <Button variant="ghost" onClick={load} disabled={busy}>
+          {busy ? <Loader2 className="size-4 animate-spin" /> : <RefreshCw className="size-4" />}
+          Обновить
+        </Button>
+      </div>
+
+      {err && <p className="mb-3 text-sm font-medium text-destructive">{err}</p>}
+
+      {leads && leads.length === 0 && (
+        <p className="rounded-xl border border-on-surface/5 bg-white p-6 text-sm text-on-surface-variant shadow-card">
+          Заявок пока нет.
+        </p>
+      )}
+
+      {leads && leads.length > 0 && (
+        <div className="overflow-hidden rounded-xl border border-on-surface/5 bg-white shadow-card">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-light-sage/40 text-xs uppercase tracking-wide text-on-surface-variant">
+              <tr>
+                <th className="px-4 py-3 font-semibold">Когда</th>
+                <th className="px-4 py-3 font-semibold">Имя</th>
+                <th className="px-4 py-3 font-semibold">Контакт</th>
+                <th className="px-4 py-3 font-semibold">О статьях</th>
+              </tr>
+            </thead>
+            <tbody>
+              {leads.map((l) => (
+                <tr key={l.id} className="border-t border-muted-border/60">
+                  <td className="whitespace-nowrap px-4 py-3 text-on-surface-variant">
+                    {new Date(l.created_at).toLocaleString('ru-RU')}
+                  </td>
+                  <td className="px-4 py-3 font-medium text-primary">{l.name}</td>
+                  <td className="px-4 py-3">{l.contact}</td>
+                  <td className="px-4 py-3 text-on-surface-variant">{l.about || '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </section>
+  )
+}
 
 export default function AdminScreen() {
   const [code, setCode] = useState('')
@@ -103,6 +196,8 @@ export default function AdminScreen() {
 
         {msg && <p className="mt-3 text-sm font-medium text-on-surface-variant">{msg}</p>}
       </div>
+
+      <LeadsSection />
     </div>
   )
 }
