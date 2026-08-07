@@ -1,20 +1,39 @@
 import { useEffect, useState } from 'react'
-import { Ticket, Loader2, Inbox, RefreshCw } from 'lucide-react'
+import { Ticket, Loader2, Inbox, RefreshCw, Ban } from 'lucide-react'
 import { adminCreateCoupon } from '@/lib/api'
 import { supabase } from '@/lib/supabaseClient'
 import { Button } from '@/components/ui/button'
 
-async function fetchLeads() {
+async function authedFetch(path, options = {}) {
   const {
     data: { session },
   } = await supabase.auth.getSession()
   const token = session?.access_token
-  const res = await fetch('/api/admin-leads', {
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  const res = await fetch(path, {
+    ...options,
+    headers: {
+      ...(options.body ? { 'Content-Type': 'application/json' } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...options.headers,
+    },
   })
   const data = await res.json()
   if (!res.ok) throw new Error(data?.error || `Ошибка сервера (${res.status})`)
+  return data
+}
+
+async function fetchLeads() {
+  const data = await authedFetch('/api/admin-leads')
   return data.leads
+}
+
+async function fetchCoupons() {
+  const data = await authedFetch('/api/admin-coupons')
+  return data.coupons
+}
+
+async function revokeCoupon(code) {
+  return authedFetch('/api/admin-revoke-coupon', { method: 'POST', body: JSON.stringify({ code }) })
 }
 
 function LeadsSection() {
@@ -88,6 +107,117 @@ function LeadsSection() {
                   <td className="px-4 py-3 text-on-surface-variant">{l.about || '—'}</td>
                 </tr>
               ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </section>
+  )
+}
+
+function statusLabel(c) {
+  if (c.revoked_at) return { text: 'Отозван', className: 'text-destructive' }
+  if (c.redeemed_by) return { text: 'Активен', className: 'text-primary' }
+  return { text: 'Свободен', className: 'text-on-surface-variant' }
+}
+
+function CouponsSection() {
+  const [coupons, setCoupons] = useState(null)
+  const [busy, setBusy] = useState(false)
+  const [revoking, setRevoking] = useState(null)
+  const [err, setErr] = useState('')
+
+  async function load() {
+    setBusy(true)
+    setErr('')
+    try {
+      setCoupons(await fetchCoupons())
+    } catch (e) {
+      setErr(e.message || 'Не удалось загрузить купоны.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  useEffect(() => {
+    load()
+  }, [])
+
+  async function handleRevoke(code) {
+    if (!window.confirm(`Отозвать доступ по купону «${code}»? Человек сразу потеряет безлимит.`)) return
+    setRevoking(code)
+    setErr('')
+    try {
+      await revokeCoupon(code)
+      await load()
+    } catch (e) {
+      setErr(e.message || 'Не удалось отозвать купон.')
+    } finally {
+      setRevoking(null)
+    }
+  }
+
+  return (
+    <section className="mt-10">
+      <div className="mb-4 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <div className="flex size-11 items-center justify-center rounded-full bg-lime-accent text-deep-forest">
+            <Ban className="size-5" />
+          </div>
+          <div>
+            <h3 className="font-display text-xl font-bold text-primary">Купоны-слоты</h3>
+            <p className="text-sm text-on-surface-variant">
+              {coupons ? `Всего: ${coupons.length}` : 'Загрузка…'}
+            </p>
+          </div>
+        </div>
+        <Button variant="ghost" onClick={load} disabled={busy}>
+          {busy ? <Loader2 className="size-4 animate-spin" /> : <RefreshCw className="size-4" />}
+          Обновить
+        </Button>
+      </div>
+
+      {err && <p className="mb-3 text-sm font-medium text-destructive">{err}</p>}
+
+      {coupons && (
+        <div className="overflow-hidden rounded-xl border border-on-surface/5 bg-white shadow-card">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-light-sage/40 text-xs uppercase tracking-wide text-on-surface-variant">
+              <tr>
+                <th className="px-4 py-3 font-semibold">Код</th>
+                <th className="px-4 py-3 font-semibold">Статус</th>
+                <th className="px-4 py-3 font-semibold">Кем активирован</th>
+                <th className="px-4 py-3 font-semibold">Когда</th>
+                <th className="px-4 py-3 font-semibold" />
+              </tr>
+            </thead>
+            <tbody>
+              {coupons.map((c) => {
+                const status = statusLabel(c)
+                return (
+                  <tr key={c.code} className="border-t border-muted-border/60">
+                    <td className="px-4 py-3 font-medium text-primary">{c.code}</td>
+                    <td className={`px-4 py-3 font-medium ${status.className}`}>{status.text}</td>
+                    <td className="px-4 py-3">{c.redeemed_by_email || '—'}</td>
+                    <td className="whitespace-nowrap px-4 py-3 text-on-surface-variant">
+                      {c.redeemed_at ? new Date(c.redeemed_at).toLocaleString('ru-RU') : '—'}
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      {c.redeemed_by && !c.revoked_at && (
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => handleRevoke(c.code)}
+                          disabled={revoking === c.code}
+                        >
+                          {revoking === c.code ? <Loader2 className="size-4 animate-spin" /> : <Ban className="size-4" />}
+                          Отозвать
+                        </Button>
+                      )}
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>
@@ -197,6 +327,7 @@ export default function AdminScreen() {
         {msg && <p className="mt-3 text-sm font-medium text-on-surface-variant">{msg}</p>}
       </div>
 
+      <CouponsSection />
       <LeadsSection />
     </div>
   )
