@@ -69,3 +69,5 @@ output/
 
 .vercel
 .env*
+# CS Vision workspace
+.ag_vision/
