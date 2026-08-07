@@ -555,14 +555,7 @@ tailwind.config = { theme: { extend: {
           Осталось <strong class="font-semibold text-lime">7 мест</strong>.
         </p>
 
-        <!--
-          ⚠️ ФОРМА НЕ ПОДКЛЮЧЕНА К БЭКЕНДУ.
-          Перед публикацией подставь endpoint в data-endpoint ниже:
-          Google Forms / Formspree / собственный /api/lead.
-          Пока endpoint пустой — форма честно говорит, что приём заявок не настроен,
-          и НЕ показывает фальшивое «заявка отправлена».
-        -->
-        <form id="applyForm" data-endpoint="" class="mx-auto mt-9 max-w-md space-y-3 text-left" novalidate>
+        <form id="applyForm" data-endpoint="/api/lead" class="mx-auto mt-9 max-w-md space-y-3 text-left" novalidate>
           <div>
             <label for="f-name" class="mb-1.5 block text-sm font-medium text-invink/80">Как тебя зовут</label>
             <input id="f-name" name="name" type="text" required autocomplete="name"
@@ -580,6 +573,12 @@ tailwind.config = { theme: { extend: {
             <textarea id="f-about" name="about" rows="3"
                       class="w-full resize-none rounded-ds-lg border border-line/40 bg-invink px-5 py-3.5 text-ink outline-none transition placeholder:text-outline focus:border-lime focus:ring-2 focus:ring-lime/40"
                       placeholder="Нутрициология, РАС, сенсорная интеграция…"></textarea>
+          </div>
+
+          <!-- honeypot: невидимо человеку, боты его заполняют — сервер тихо отбрасывает такие заявки -->
+          <div class="absolute -left-[9999px]" aria-hidden="true">
+            <label for="f-company">Компания</label>
+            <input id="f-company" name="company" type="text" tabindex="-1" autocomplete="off">
           </div>
 
           <button type="submit"
@@ -653,7 +652,7 @@ tailwind.config = { theme: { extend: {
   }, 3000);
 })();
 
-/* Форма заявки. Пока endpoint не задан — говорим правду, а не рисуем фальшивый успех. */
+/* Форма заявки → POST /api/lead (Vercel serverless, пишет в Supabase). */
 (function () {
   var form = document.getElementById('applyForm');
   var msg  = document.getElementById('formMsg');
@@ -676,7 +675,18 @@ tailwind.config = { theme: { extend: {
       show('Приём заявок ещё не подключён — страница в подготовке. Endpoint формы задаётся в data-endpoint.');
       return;
     }
-    fetch(endpoint, { method: 'POST', body: new FormData(form) })
+    /* JSON, не FormData: Vercel по умолчанию не парсит multipart, только json/urlencoded */
+    var payload = {
+      name: name.value,
+      contact: contact.value,
+      about: (form.elements.namedItem('about') || {}).value || '',
+      company: (form.elements.namedItem('company') || {}).value || '' // honeypot
+    };
+    fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
       .then(function (r) {
         if (!r.ok) throw new Error('bad status');
         form.reset();
