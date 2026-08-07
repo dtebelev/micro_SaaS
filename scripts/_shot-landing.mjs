@@ -2,7 +2,7 @@ import { chromium } from 'playwright';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const file = pathToFileURL(path.resolve('landing/index.html')).href;
+const file = pathToFileURL(path.resolve('public/landing/index.html')).href;
 const b = await chromium.launch();
 
 /* прокручиваем страницу до низа, чтобы отработали scroll-reveal анимации,
