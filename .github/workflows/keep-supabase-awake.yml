@@ -2,8 +2,9 @@ name: Keep Supabase awake
 
 on:
   schedule:
-    # Каждые ~2 дня в 06:00 UTC. Supabase free-tier засыпает после 7 дней без обращений к API.
-    - cron: '0 6 */2 * *'
+    # Каждый день в 06:00 UTC. Supabase free-tier засыпает после 7 дней без обращений к API;
+    # раз в 2 дня оказалось недостаточным запасом (пропуск/задержка cron привели к паузе проекта).
+    - cron: '0 6 * * *'
   workflow_dispatch: {}
 
 jobs:
@@ -16,9 +17,10 @@ jobs:
           SUPABASE_URL: https://lhalwyegtrlhimpnwpah.supabase.co
           SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxoYWx3eWVndHJsaGltcG53cGFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4NDQyNTcsImV4cCI6MjEwMDQyMDI1N30.JXR35xkwFlPcxelwhPm6xLUqnkscJzqRY8GyyBSAFAA
         run: |
+          # Use a public Supabase endpoint so this check is independent of application tables and RLS.
           # /rest/v1/ (корневая OpenAPI-схема) теперь принимает только service_role,
           # поэтому стучимся в реальную таблицу — анонимному ключу этого достаточно для "активности".
           curl -sS -f -o /dev/null -w "HTTP %{http_code}\n" \
-            "$SUPABASE_URL/rest/v1/coupons?select=*&limit=1" \
+            "$SUPABASE_URL/auth/v1/settings" \
             -H "apikey: $SUPABASE_ANON_KEY" \
             -H "Authorization: Bearer $SUPABASE_ANON_KEY"
