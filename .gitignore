@@ -26,6 +26,10 @@ secrets.*
 serviceAccount*.json
 gcloud-*.json
 
+# ==== Python ====
+__pycache__/
+*.py[cod]
+
 # ==== Зависимости ====
 node_modules/
 vendor/
