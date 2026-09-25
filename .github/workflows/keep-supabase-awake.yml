@@ -1,26 +1,53 @@
 name: Keep Supabase awake
 
+# Free-tier Supabase projects pause after about 7 days without real database
+# activity. Hitting the Auth or REST URL does not count, and a paused project's
+# hostname stops resolving, so a request to the project URL cannot wake it up.
+#
+# This job uses a personal access token per Supabase account, asks Supabase for
+# every project on that account, runs select 1 on each healthy database, and
+# requests a restore for any paused project. New projects are picked up
+# automatically. The job is red (so GitHub emails you) when a project was
+# paused, a ping failed, or a token is missing or rejected.
+#
+# Secrets — GitHub → Settings → Secrets and variables → Actions:
+#   SUPABASE_TOKEN_1  required, first Supabase account
+#   SUPABASE_TOKEN_2  required, second Supabase account
+#   SUPABASE_TOKEN_3 .. SUPABASE_TOKEN_8  optional extra accounts; leave unset
+# Create each token in that account: Supabase Dashboard → Account → Access Tokens.
+# The workflow never prints the token values.
+
 on:
   schedule:
-    # Каждый день в 06:00 UTC. Supabase free-tier засыпает после 7 дней без обращений к API;
-    # раз в 2 дня оказалось недостаточным запасом (пропуск/задержка cron привели к паузе проекта).
-    - cron: '0 6 * * *'
+    # Daily, off the top of the hour. GitHub often starts crons a few hours late;
+    # one successful run a day is still inside the 7-day pause window.
+    - cron: '17 6 * * *'
   workflow_dispatch: {}
 
+permissions:
+  contents: read
+
+concurrency:
+  group: keep-supabase-awake
+  cancel-in-progress: false
+
 jobs:
-  ping:
+  keepalive:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - name: Ping Supabase REST API
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Keep every Supabase project awake
         env:
-          # Публичный (anon/publishable) ключ Supabase — предназначен для клиентского кода, безопасен в репозитории.
-          SUPABASE_URL: https://lhalwyegtrlhimpnwpah.supabase.co
-          SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxoYWx3eWVndHJsaGltcG53cGFoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQ4NDQyNTcsImV4cCI6MjEwMDQyMDI1N30.JXR35xkwFlPcxelwhPm6xLUqnkscJzqRY8GyyBSAFAA
-        run: |
-          # Use a public Supabase endpoint so this check is independent of application tables and RLS.
-          # /rest/v1/ (корневая OpenAPI-схема) теперь принимает только service_role,
-          # поэтому стучимся в реальную таблицу — анонимному ключу этого достаточно для "активности".
-          curl -sS -f -o /dev/null -w "HTTP %{http_code}\n" \
-            "$SUPABASE_URL/auth/v1/settings" \
-            -H "apikey: $SUPABASE_ANON_KEY" \
-            -H "Authorization: Bearer $SUPABASE_ANON_KEY"
+          PYTHONUNBUFFERED: "1"
+          SUPABASE_TOKEN_1: ${{ secrets.SUPABASE_TOKEN_1 }}
+          SUPABASE_TOKEN_2: ${{ secrets.SUPABASE_TOKEN_2 }}
+          SUPABASE_TOKEN_3: ${{ secrets.SUPABASE_TOKEN_3 }}
+          SUPABASE_TOKEN_4: ${{ secrets.SUPABASE_TOKEN_4 }}
+          SUPABASE_TOKEN_5: ${{ secrets.SUPABASE_TOKEN_5 }}
+          SUPABASE_TOKEN_6: ${{ secrets.SUPABASE_TOKEN_6 }}
+          SUPABASE_TOKEN_7: ${{ secrets.SUPABASE_TOKEN_7 }}
+          SUPABASE_TOKEN_8: ${{ secrets.SUPABASE_TOKEN_8 }}
+        run: python3 .github/scripts/keep-supabase-awake.py
