@@ -1,0 +1,54 @@
+name: Keep repository active
+
+# GitHub turns off scheduled workflows in a public repository after 60 days
+# without a commit. A workflow run does not count, so "Keep Supabase awake"
+# would eventually be switched off even though it runs every day.
+#
+# This job writes the current time into .github/last-activity.txt and commits
+# that file with the built-in GITHUB_TOKEN. It uses no secrets, does not call
+# Supabase, and does not change the daily ping.
+#
+# It runs on the 1st and the 15th, rather than only once a month. GitHub
+# sometimes skips a scheduled run when Actions is busy. One missed run must
+# still leave a commit well inside the 60-day window.
+
+on:
+  schedule:
+    # 09:17 UTC, away from the top of the hour, when scheduled runs are less
+    # likely to be delayed or dropped.
+    - cron: '17 9 1,15 * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: keep-repo-active
+  cancel-in-progress: false
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+
+      - name: Commit activity heartbeat
+        run: |
+          set -euo pipefail
+          stamp="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          printf '%s\n' \
+            '# Automatic heartbeat so GitHub does not turn off scheduled workflows.' \
+            "$stamp" > .github/last-activity.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/last-activity.txt
+          if git diff --staged --quiet; then
+            echo "Heartbeat already current. No commit."
+            exit 0
+          fi
+          git commit -m "chore: activity heartbeat ${stamp}"
+          git push origin main
